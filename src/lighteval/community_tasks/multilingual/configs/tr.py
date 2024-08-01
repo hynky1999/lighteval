@@ -10,11 +10,12 @@ from ..tasks.nli.xnli import XNLITask
 from ..tasks.mqa.xcopa import XCopaTask
 from ..tasks.qa.mkqa import MkqaTask, TaskType
 
+_MKQA_TASKS = [MkqaTask(lang="tr", type=task_type) for task_type in get_args(TaskType)]
 
 _GENERATIVE_TASKS = [
     XquadTask(lang="tr"),
     Tquad2Task(),
-    *[MkqaTask(lang="tr", type=task_type) for task_type in get_args(TaskType)]
+    *_MKQA_TASKS
 ]
 
 _MC_TASKS = [
@@ -39,7 +40,8 @@ TASKS_GROUPS = {
     "xnli": tasks_to_string([XNLITask(lang="tr", version=version) for version in (1, 2)]),
     "arc": tasks_to_string([ARCEasyTrTask(version=2)]),
     "exams": tasks_to_string([ExamsTask(lang="tr", subject=subject, show_options=show_options) for subject in subjects_by_lang_code["tr"] for show_options in [True, False]]),
-    "mkqa": tasks_to_string([MkqaTask(lang="tr", type=task_type) for task_type in get_args(TaskType)])
+    "mkqa": tasks_to_string(_MKQA_TASKS),
+    "early-signal": tasks_to_string(['arc-v2-tr', 'belebele-tr', 'exams-tr:Biology', 'exams-tr:Business', 'exams-tr:History', 'exams-tr:Philosophy', 'hellaswag-tr', *_MKQA_TASKS, *[MMLUTaskTr(subset) for subset in get_args(MMLU_SUBSETS)], 'tqduad2', 'xcopa-tr', 'xnli-bool-v2-tr', 'xquad-tr'])
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

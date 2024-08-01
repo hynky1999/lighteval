@@ -25,6 +25,8 @@ _GENERATIVE_TASKS = [
     *[MkqaTask(lang="ar", type=task_type) for task_type in get_args(TaskType)],
 ]
 
+_NATIVE_MMLU_TASKS = [ArabicMMLUTask(task=task) for task in get_args(AR_MMLU_TASK_TYPE)]
+
 _MC_TASKS = [
     XCODAHTask(lang="ar"),
     XCopaTask(lang="ar"),
@@ -35,7 +37,7 @@ _MC_TASKS = [
     *get_mlmm_tasks("ar"),
     *ARABIC_EVALS_MC_TASKS,
     *[ExamsTask(lang="ar", subject=subject, show_options=show_options) for subject in subjects_by_lang_code["ar"] for show_options in [True, False]],
-    *[ArabicMMLUTask(task=task) for task in get_args(AR_MMLU_TASK_TYPE)]
+    *_NATIVE_MMLU_TASKS
 ]
 
 _ALL_TASKS = _GENERATIVE_TASKS + _MC_TASKS
@@ -49,7 +51,8 @@ TASKS_GROUPS = {
     "exams": tasks_to_string([ExamsTask(lang="ar", subject=subject, show_options=show_options) for subject in subjects_by_lang_code["ar"] for show_options in [True, False]]),
     "xcodah": tasks_to_string([XCopaTask(lang="ar")]),
     "mkqa": tasks_to_string([MkqaTask(lang="ar", type=task_type) for task_type in get_args(TaskType)]),
-    "arabic_mmlu": tasks_to_string([ArabicMMLUTask(task=task) for task in get_args(AR_MMLU_TASK_TYPE)]),
+    "arabic_mmlu": tasks_to_string(_NATIVE_MMLU_TASKS),
+    "early-signal": tasks_to_string(['alghafa:mcq_exams_test_ar', 'alghafa:meta_ar_msa', 'alghafa:multiple_choice_grounded_statement_soqal_task', 'alghafa:multiple_choice_grounded_statement_xglue_mlqa_task', 'arabic_exams', *_NATIVE_MMLU_TASKS, 'arc_easy_ar', *[f"{'exams-ar':{subset}}" for subset in subjects_by_lang_code["ar"]], 'hellaswag-ar', 'mlqa-ar', 'piqa_ar', 'race_ar', 'sciq_ar', 'tydiqa-ar', 'x-codah-ar', 'x-csqa-ar', 'xnli-bool-v2-ar', 'xquad-ar', 'xstory_cloze-ar'])
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

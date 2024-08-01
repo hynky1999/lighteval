@@ -4,7 +4,6 @@ from ..tasks.utils.tasks_helpers import tasks_to_string
 from ..tasks.suites.indic_evals import ARCIndTask, BoolQIndTask, HellaSwagIndTask
 from ..tasks.qa.Indicqa import IndicQATask
 from ..tasks.mqa.indicxcopa import XCopaIndicTask
-from ..tasks.nli.indicnxnli import XNLIIndicTask
 from ..tasks.qa.mintaka import MintakaTask
 from ..tasks.mqa.mlmm import MMLU_SUBSET, get_mlmm_tasks
 from ..tasks.mqa_with_context.belebele import BelebeleTask
@@ -54,7 +53,8 @@ TASKS_GROUPS = {
     "xnli": tasks_to_string([XNLITask(lang="hi", version=version) for version in (1, 2)] +
                             [XNLIIndicTask(lang="hi", version=version) for version in (1, 2)]),
     "meta_mmlu": tasks_to_string([MetaMMLUTask("hi", subset) for subset in get_args(MMLU_SUBSET)]),
-    "xcodah": tasks_to_string([XCODAHTask("hi")])
+    "xcodah": tasks_to_string([XCODAHTask("hi")]),
+    "early-signal": tasks_to_string(['belebele-hi', 'hellaswag-hi', 'hi-arc:easy', 'indicnxnli-hi-bool-v2-hi', 'indicqa.hi', 'mlqa-hi', *[MetaMMLUTask("hi", subset) for subset in get_args(MMLU_SUBSET)], 'x-codah-hi', 'x-csqa-hi', 'xcopa-hi', 'xnli-bool-v2-hi', 'xquad-hi', 'xstory_cloze-hi'])
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

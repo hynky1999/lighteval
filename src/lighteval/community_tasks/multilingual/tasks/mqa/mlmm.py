@@ -10,7 +10,6 @@ from ..utils.prompts import (
 from lighteval.metrics.metrics import Metrics
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
-
 # trust_dataset is a bit scary and thus we lock the commit
 LANGS = Literal["en", "ar", "zh", "ru", "fr", "hi", "te"]
 
@@ -100,6 +99,7 @@ MMLU_SUBSET = Literal[
     "world_religions",
 ]
 
+
 class M_MMLUTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS, subset: MMLU_SUBSET):
         super().__init__(
@@ -125,7 +125,6 @@ class M_MMLUTask(LightevalTaskConfig):
             ),
         )
         self.subset = subset
-
 
 
 class M_ARCTask(LightevalTaskConfig):
@@ -175,9 +174,12 @@ class M_TruthfulQATask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob_norm_pmi,
             ),
         )
-        
+
+
+def get_mmlu_tasks(lang: LANGS):
+    return [M_MMLUTask(lang, subset) for subset in get_args(MMLU_SUBSET)]
 
 
 def get_mlmm_tasks(lang: LANGS):
-    mmlu_tasks = [M_MMLUTask(lang, subset) for subset in get_args(MMLU_SUBSET)]
-    return mmlu_tasks + [M_HellaSwagTask(lang), M_ARCTask(lang), M_TruthfulQATask(lang, "mc1"), M_TruthfulQATask(lang, "mc2")]
+    return get_mmlu_tasks(lang) + [M_HellaSwagTask(lang), M_ARCTask(lang), M_TruthfulQATask(lang, "mc1"),
+                                   M_TruthfulQATask(lang, "mc2")]

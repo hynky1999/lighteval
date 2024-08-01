@@ -39,7 +39,9 @@ TASKS_GROUPS = {
     "mc": tasks_to_string(_MC_TASKS),
     "xnli": tasks_to_string([XNLITask(lang="th", version=version) for version in (1, 2)]),
     "meta_mmlu": tasks_to_string([MetaMMLUTask("th", subset) for subset in get_args(MMLU_SUBSET)]),
-    "mkqa": tasks_to_string([MkqaTask(lang="th", type=task_type) for task_type in get_args(TaskType)])
+    "mkqa": tasks_to_string([MkqaTask(lang="th", type=task_type) for task_type in get_args(TaskType)]),
+    "early-signal": tasks_to_string(['belebele-th', 'm3exam-th', *[MetaMMLUTask("th", subset) for subset in get_args(MMLU_SUBSET)],
+                                     'mkqa-th:entity', 'mkqa-th:number_with_unit', 'mkqa-th:number', 'mkqa-th:short_phrase', 'xnli-bool-v2-th', 'xquad-th'])
 }
 
 

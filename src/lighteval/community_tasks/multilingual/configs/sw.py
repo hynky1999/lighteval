@@ -32,7 +32,8 @@ TASKS_GROUPS = {
     "generative": tasks_to_string(_GENERATIVE_TASKS),
     "mc": tasks_to_string(_MC_TASKS),
     "xnli": tasks_to_string([XNLITask(lang="sw", version=version) for version in (1, 2)]),
-    "xcodah": tasks_to_string([XCODAHTask(lang="sw")])
+    "xcodah": tasks_to_string([XCODAHTask(lang="sw")]),
+    "early-signal": tasks_to_string(['arc-sw:easy', 'belebele-sw', 'm3exam-sw', 'x-csqa-sw', 'xcopa-sw', 'xnli-bool-v2-sw', 'xstory_cloze-sw'])
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]
