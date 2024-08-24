@@ -43,7 +43,7 @@ early_signals_generative = [
 
 early_signals_mc = [
     "arc-v2-tr",
-    "belbele-tr",
+    "belebele-tr",
     *[ExamsTask(lang="tr", subject=subject, show_options=False) for subject in get_args(subjects_by_lang_code["tr"])],
     "hellaswag-tr",
     *[MMLUTaskTr(subset) for subset in get_args(MMLU_SUBSETS)],
