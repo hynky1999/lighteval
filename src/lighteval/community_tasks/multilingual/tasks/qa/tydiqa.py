@@ -5,6 +5,7 @@ from ..utils.metrics import get_qa_metric
 from ..utils.prompts import get_mlqa_prompt
 from ..utils.translation_literals import LANG_NAMES, LANG_NAMES_INVERTED
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
+from lighteval.metrics import Metrics
 
 
 LANGS = Literal["zh", "en", "ar", "hi", "te", "th", "sw", "ru"]
@@ -26,4 +27,5 @@ class TydiqaTask(LightevalTaskConfig):
             generation_size=130,
             stop_sequence=("\n",),
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )

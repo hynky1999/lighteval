@@ -34,7 +34,7 @@ class M_HellaSwagTask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 
@@ -121,7 +121,7 @@ class M_MMLUTask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
         self.subset = subset
@@ -148,7 +148,7 @@ class M_ARCTask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 
@@ -172,7 +172,7 @@ class M_TruthfulQATask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
         

@@ -44,7 +44,7 @@ early_signals_generative = [
 early_signals_mc = [
     "arc-v2-tr",
     "belebele-tr",
-    *[ExamsTask(lang="tr", subject=subject, show_options=False) for subject in get_args(subjects_by_lang_code["tr"])],
+    *[ExamsTask(lang="tr", subject=subject, show_options=False) for subject in subjects_by_lang_code["tr"]],
     "hellaswag-tr",
     *[MMLUTaskTr(subset) for subset in get_args(MMLU_SUBSETS)],
     "xcopa-tr",
@@ -60,7 +60,7 @@ TASKS_GROUPS = {
                             [XNLI2Task(lang="tr", version=version) for version in (1, 2)]),
     "xnli2": tasks_to_string([XNLI2Task(lang="tr", version=2)]),
     "arc": tasks_to_string([ARCEasyTrTask(version=2)]),
-    "exams": tasks_to_string([ExamsTask(lang="tr", subject=subject, show_options=show_options) for subject in subjects_by_lang_code["tr"] for show_options in [True, False]]),
+    "exams": tasks_to_string([ExamsTask(lang="tr", subject=subject, show_options=False) for subject in subjects_by_lang_code["tr"]]),
     "mkqa": tasks_to_string([MkqaTask(lang="tr", type=task_type) for task_type in get_args(TaskType)]),
     "hellaswag": tasks_to_string([HellaSwagTrTask()]),
     "winograde": tasks_to_string([WinogradeTrTask()]),

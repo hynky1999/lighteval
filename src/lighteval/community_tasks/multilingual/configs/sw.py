@@ -40,7 +40,6 @@ early_signals_generative = [
 early_signals_mc = [
     "belebele-sw",
     "arc-sw:easy",
-    "mmlu-sw",
     "m3exam-sw",
     "x-csqa-sw",
     "xcopa-sw",

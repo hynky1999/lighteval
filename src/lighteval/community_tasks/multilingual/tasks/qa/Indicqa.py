@@ -1,6 +1,8 @@
 
 
 from typing import Literal
+
+from lighteval.metrics.metrics import Metrics
 from ..utils.metrics import get_qa_metric
 from ..utils.prompts import get_mlqa_prompt
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
@@ -22,5 +24,6 @@ class IndicQATask(LightevalTaskConfig):
             filter=lambda x: all(len(a) != 0 for a in x["answers"]["text"]) and len(x["question"] + x["context"]) < max_query_length,
             generation_size=50,
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             stop_sequence=("\n",),
         )

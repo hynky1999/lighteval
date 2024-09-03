@@ -22,6 +22,7 @@ class CMRC2018Task(LightevalTaskConfig):
             few_shots_split="train",
             generation_size=100,
             metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             stop_sequence=("\n",),
         )
 
@@ -39,7 +40,7 @@ class C3Task(LightevalTaskConfig):
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
         
@@ -63,7 +64,7 @@ class OCNLI(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
     
@@ -88,7 +89,7 @@ class CMNLITask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 

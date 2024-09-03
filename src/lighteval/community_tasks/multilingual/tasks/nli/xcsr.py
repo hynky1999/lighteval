@@ -18,7 +18,8 @@ class XCODAHTask(LightevalTaskConfig):
             hf_repo="INK-USC/xcsr",
             hf_subset=f"X-CODAH-{lang}",
             evaluation_splits=("validation",),
-            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace, Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi],
+            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace, Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                    Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, Metrics.prob_raw_norm_pmi],
         )
 
 
@@ -36,5 +37,6 @@ class XCSQATask(LightevalTaskConfig):
             generation_size=-1,
             stop_sequence=("\n",),
             metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi],
+                    Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                    Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, Metrics.prob_raw_norm_pmi],
         )

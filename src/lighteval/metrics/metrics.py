@@ -275,6 +275,14 @@ class Metrics(Enum):
         corpus_level_fn=np.mean,
         higher_is_better=True,
     )
+    prob_raw = SampleLevelMetric(
+        metric="prob_raw",
+        sample_level_fn=LoglikelihoodProb(return_mean=False).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
     loglikelihood_acc_norm = SampleLevelMetric(
         metric="acc_norm",
         sample_level_fn=LoglikelihoodAcc(length_normalization=True).compute,
@@ -294,6 +302,22 @@ class Metrics(Enum):
     loglikelihood_prob_norm_token = SampleLevelMetric(
         metric="prob_norm_token",
         sample_level_fn=LoglikelihoodProb(token_length_normalization=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    prob_raw_norm = SampleLevelMetric(
+        metric="prob_raw_norm",
+        sample_level_fn=LoglikelihoodProb(length_normalization=True, return_mean=False).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    prob_raw_norm_token = SampleLevelMetric(
+        metric="prob_raw_norm_token",
+        sample_level_fn=LoglikelihoodProb(token_length_normalization=True, return_mean=False).compute,
         category=MetricCategory.MULTICHOICE,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,
@@ -342,6 +366,14 @@ class Metrics(Enum):
     loglikelihood_prob_norm_pmi = SampleLevelMetric(
         metric="prob_norm_pmi",
         sample_level_fn=LoglikelihoodProb().compute,
+        category=MetricCategory.MULTICHOICE_PMI,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    prob_raw_norm_pmi = SampleLevelMetric(
+        metric="prob_raw_norm_pmi",
+        sample_level_fn=LoglikelihoodProb(return_mean=False).compute,
         category=MetricCategory.MULTICHOICE_PMI,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,

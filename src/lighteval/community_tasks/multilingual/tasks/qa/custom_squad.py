@@ -1,5 +1,7 @@
 from typing import Literal
 
+from lighteval.metrics.metrics import Metrics
+
 from ..utils.translation_literals import LANG_NAMES_INVERTED
 from ..utils.metrics import get_qa_metric
 from ..utils.prompts import get_kenswquad_prompt, get_mlqa_prompt
@@ -20,6 +22,7 @@ class ThaiQATask(LightevalTaskConfig):
             stop_sequence=("\n",),
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length,
             metric=(get_qa_metric("th", "exact"), get_qa_metric("th", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )
         
 
@@ -36,6 +39,7 @@ class SberSquadTask(LightevalTaskConfig):
             hf_revision="92d74b272206a76fb3fec1f0355acab370a4de3a",
             trust_dataset=True,
             metric=(get_qa_metric("ru", "exact"), get_qa_metric("ru", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=50,
             stop_sequence=("\n",),
         )
@@ -52,6 +56,7 @@ class ARCDSquadTask(LightevalTaskConfig):
             evaluation_splits=("train", "validation"),
             trust_dataset=True,
             metric=(get_qa_metric("ar", "exact"), get_qa_metric("ar", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=70,
             stop_sequence=("\n",),
         )
@@ -68,6 +73,7 @@ class KenswQuADTask(LightevalTaskConfig):
             few_shots_split="validation",
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length,
             metric=(get_qa_metric("sw", "exact"), get_qa_metric("sw", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=50,
             stop_sequence=("\n",),
         )
@@ -83,6 +89,7 @@ class ChineseSQuADTask(LightevalTaskConfig):
             evaluation_splits=("validation",),
             few_shots_split="train",
             metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=50,
             stop_sequence=("\n",),
         )

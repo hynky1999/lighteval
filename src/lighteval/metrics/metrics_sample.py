@@ -253,11 +253,13 @@ class LoglikelihoodAcc:
         intersection = set(best_choices) & set(gold_ixs)
         return len(intersection) / n_correct
 
-
 def safe_divide(numerator: np.ndarray, denominator: float, default_value: float = 0.0) -> np.ndarray:
-    return np.where(denominator != 0, numerator / denominator, default_value)
+    if denominator == 0:
+        return np.full_like(numerator, default_value)
+
+    return numerator / denominator
 class LoglikelihoodProb:
-    def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False) -> None:
+    def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False, return_mean: bool = True) -> None:
         """Log likelihood probability class. It tests probability of choosing the best choice.
 
         Args:
@@ -272,7 +274,7 @@ class LoglikelihoodProb:
         self.length_normalization = length_normalization
         self.token_length_normalization = token_length_normalization
         self.ignore_first_space = ignore_first_space
-    
+        self.return_mean = return_mean
 
     def compute(self, gold_ixs: list[int], choices_logprob: list[float], formatted_doc: Doc, choices_token_lengths: list[int] = [], **kwargs) -> float:
         """Computes the log likelihood probability: chance of choosing the best choice.
@@ -304,8 +306,10 @@ class LoglikelihoodProb:
             choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
 
         probs = np.exp(choices_logprob)
-        probs = safe_divide(probs[gold_ixs], np.sum(probs))
-        return np.sum(probs)
+        correct_probs = probs[gold_ixs]
+        if self.return_mean:
+            correct_probs = safe_divide(correct_probs, np.sum(probs))
+        return np.mean(correct_probs)
 
 
 class Recall:

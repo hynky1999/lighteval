@@ -24,7 +24,7 @@ class FrenchARCTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 
@@ -41,7 +41,7 @@ class FrenchHellaSwagTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 
@@ -63,7 +63,7 @@ class BoolQAFrenchTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
 
@@ -81,6 +81,7 @@ class FQuADv2Task(LightevalTaskConfig):
             generation_size=80,
             stop_sequence=("\n",),
             metric=(get_qa_metric("fr", "exact"), get_qa_metric("fr", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )
     
 

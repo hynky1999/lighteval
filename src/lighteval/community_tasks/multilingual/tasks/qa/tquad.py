@@ -1,5 +1,7 @@
 from typing import Literal
 
+from lighteval.metrics.metrics import Metrics
+
 from ..utils.metrics import get_qa_metric
 from ..utils.prompts import get_tquad_prompt
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
@@ -19,4 +21,5 @@ class Tquad2Task(LightevalTaskConfig):
             generation_size=80,
             stop_sequence=("\n",),
             metric=(get_qa_metric("tr", "exact"), get_qa_metric("tr", "f1")),
+            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )
