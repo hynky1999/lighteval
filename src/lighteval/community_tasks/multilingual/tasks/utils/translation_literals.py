@@ -2,7 +2,7 @@ from typing import Literal
 
 
 # This is experimental flag if activated languages without sentence space separation will be evaluated that way
-LANGS = Literal["ar", "en", "fr", "hi", "ru", "sw", "te", "th", "tr", "zh"]
+LANGS = Literal["ar", "en", "fr", "hi", "ru", "sw", "te", "th", "tr", "zh", "eu"]
 
 LANG_NAMES = {
     "arabic": "ar",
@@ -41,6 +41,7 @@ QUESTION = {
     "te": "ప్రశ్న",
     "th": "คำถาม",
     "tr": "Soru",
+    "eu": "Galdera",
     "zh": "问题",
 }
 
@@ -62,6 +63,7 @@ ANSWER = {
     "te": "జవాబు",
     "th": "คำตอบ",
     "tr": "Cevap",
+    "eu": "Erantzuna",
     "zh": "答案",
 }
 
@@ -79,6 +81,7 @@ NLI_QUESTION = {
     "th": "ใช่ไหม",
     "tr": "değil mi",
     "zh": "是不是",
+    "eu": "ezta",
 }
 
 ENTAILMENT_LABELS = {
@@ -92,6 +95,7 @@ ENTAILMENT_LABELS = {
     "th": "ใช่",
     "tr": "Evet",
     "zh": "是的",
+    "eu": "Bai",
 }
 
 NEUTRAL_LABELS = {
@@ -105,6 +109,7 @@ NEUTRAL_LABELS = {
     "tr": "Ayrıca",
     "te": "అలాగే",
     "zh": "而且",
+    "eu": "Halaber",
 }
 
 CONTRADICTION_LABELS = {
@@ -118,6 +123,7 @@ CONTRADICTION_LABELS = {
     "th": "ไม่",
     "tr": "Hayır",
     "zh": "不是",
+    "eu": "Ez",
 }
 
 IMPOSSIBLE = {
@@ -156,6 +162,7 @@ CAUSE_LABELS = {
     "th": "เพราะ",
     "tr": "çünkü",
     "ru": "потому что",
+    "eu": "zaren",
 }
 
 EFFECT_LABELS = {
@@ -169,6 +176,7 @@ EFFECT_LABELS = {
     "th": "ดังนั้น",
     "tr": "bu yüzden",
     "ru": "поэтому",
+    "eu": "horregatik",
 }
 
 
@@ -184,6 +192,7 @@ FULL_STOP = {
     "te": ".",
     "tr": ".",
     "ru": ".",
+    "eu": ".",
 }
 
 WORD_SPACE = {
@@ -197,6 +206,7 @@ WORD_SPACE = {
     "th": "",
     "tr": " ",
     "zh": "",
+    "eu": " ",
 }
 
 SENTENCE_SPACE = {
@@ -210,6 +220,7 @@ SENTENCE_SPACE = {
     "th": " ",
     "tr": " ",
     "zh": "",
+    "eu": " ",
 }
 
 COMMA = {
@@ -223,6 +234,7 @@ COMMA = {
     "th": ",",
     "tr": ",",
     "zh": "，",
+    "eu": ",",
 }
 
 
@@ -237,6 +249,7 @@ QUESTION_MARK = {
     "th": "?",
     "tr": "?",
     "zh": "？",
+    "eu": "?",
 }
 
 COLON = {
@@ -250,6 +263,7 @@ COLON = {
     "th": ":",
     "tr": ":",
     "zh": "：",
+    "eu": ":",
 }
 
 

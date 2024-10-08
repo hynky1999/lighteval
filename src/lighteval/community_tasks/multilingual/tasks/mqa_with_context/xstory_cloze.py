@@ -5,7 +5,7 @@ from lighteval.tasks.lighteval_task import LightevalTaskConfig
 from lighteval.tasks.tasks_prompt_formatting import storycloze
 
 
-LANGS = Literal["zh", "ru", "en", "ar", "te", "sw", "hi"]
+LANGS = Literal["zh", "ru", "en", "ar", "te", "sw", "hi", "eu"]
 
 
 class XStoryClozeTask(LightevalTaskConfig):

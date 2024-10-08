@@ -4,7 +4,7 @@ from lighteval.metrics.metrics import Metrics
 
 from ..utils.translation_literals import LANG_NAMES_INVERTED
 from ..utils.metrics import get_qa_metric
-from ..utils.prompts import get_kenswquad_prompt, get_mlqa_prompt
+from ..utils.prompts import get_kenswquad_prompt, get_mlqa_prompt, get_basque_reading_prompt
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 EVAL_TYPE = Literal["exact", "f1"]
 
@@ -108,6 +108,24 @@ class ChAITask(LightevalTaskConfig):
             evaluation_splits=("train",),
             filter=lambda x: x["language"] == lang_long_name and len(x["question"] + x["context"]) < max_query_length,
             generation_size=90,
+            stop_sequence=("\n",),
+            metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
+        )
+
+
+
+class BasqueSquad(LightevalTaskConfig):
+    def __init__(self, lang: Literal["eu"]):
+        super().__init__(
+            name=f"squad-eu",
+            prompt_function=get_mlqa_prompt(lang, answer_key="text"),
+            suite=("custom",),
+            hf_repo="lighteval/elkarhizketak",
+            hf_subset="default",
+            filter=lambda line: all(txt != "CANNOTANSWER" for txt in line["answers"]["text"]),
+            evaluation_splits=("train",),
+            few_shots_split="validation",
+            generation_size=200,
             stop_sequence=("\n",),
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
         )

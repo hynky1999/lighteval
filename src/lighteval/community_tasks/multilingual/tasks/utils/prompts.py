@@ -5,6 +5,7 @@ import os
 import re
 from typing import Any, Literal, Optional, Callable
 
+from lighteval.logging.hierarchical_logger import hlog
 from lighteval.utils import as_list
 
 from ..utils.translation_literals import (
@@ -329,6 +330,65 @@ def get_ceval_prompt(lang: LANGS, show_options: bool = False, join_variant: MULT
     return adapter
 
 
+def get_basque_reading_prompt(lang: LANGS):
+    prompter = _get_multi_qa_prompt(lang)
+
+    def adapter(line, task_name):
+        answer_index = int(line["answer"])
+        answers = line["candidates"]
+        if any(len(a.strip()) == 0 for a in answers):
+            return None
+
+        if len(answers) <= answer_index:
+            return None
+        return prompter(task_name, line["question"], answers, answer_index, line.get("context", ""))
+
+    return adapter
+
+def get_basque_reading_proficiency_prompt(lang: LANGS):
+    prompter = _get_multi_qa_simple_prompt(lang)
+
+    fillin_re = re.compile(r"\.{4,5}|\… \. \.|\…\.\.")
+
+
+
+    def adapter(line, task_name):
+        answer_index = int(line["answer"])
+        question = line["question"]
+        choices = line["candidates"]
+        # Each question contains a fillin part (....)
+        # We thus find first such a part a use whatever is in front as prefix
+
+        # We then substitute the fillin part with the choices
+        fillin_indexes = [(m.start(), m.end()) for m in fillin_re.finditer(question)]
+        question = line["question"]
+        if len(fillin_indexes) > 0:
+            question, choices_part = question[:fillin_indexes[0][0]], question[fillin_indexes[0][0]:]
+
+            # If there are multiple fillins we expect choices to be split by '·'
+            candidate_fillins = [choice.strip().split("·") for choice in choices]
+            if not all(len(fillin) == len(fillin_indexes) for fillin in candidate_fillins):
+                return None
+
+            # Create choices by substituting the fillings into filling_indexes
+            choices = []
+            for fillin in candidate_fillins:
+                choice = ""
+                for i, (start, end) in enumerate(fillin_indexes[:-1]):
+                    choice += fillin[i] + choices_part[end - len(question):fillin_indexes[i+1][0] - len(question)]
+                choice += fillin[-1] + choices_part[fillin_indexes[-1][1] - len(question):]
+                choices.append(choice.strip())
+        return prompter(task_name, question.strip(), choices, answer_index)
+
+
+        # Then you create choices by substituting '.....' with candidates
+        # Note: There can be multiple '.....' in the question, then each candiate should contain fill
+        # for each '.....' separated by '·'
+
+
+
+    return adapter
+
 def get_alghafa_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)
 
@@ -531,6 +591,15 @@ def get_mlqa_prompt(lang: LANGS, answer_key: str = "text"):
         )
     return adapter
 
+def get_basque_squad_prompt(lang: LANGS, answer_key: str = "text"):
+    prompter = _get_qa_prompt(lang)
+    def adapter(line, task_name):
+        # remove empty answers
+        answers = [ans for ans in line["answers"][answer_key] if len(ans) > 0]
+        return prompter(
+            task_name, line["question"], answers, line["context"].replace("CANNOTANSWER", "").strip()
+        )
+    return adapter
 
 def get_kenswquad_prompt(lang: LANGS, answer_key: str = "answer"):
     prompter = _get_qa_prompt(lang)
@@ -970,7 +1039,6 @@ def get_xcodah_prompt(lang: LANGS):
 def get_winogrande_prompt(lang: LANGS):
 
     def winogrande(line, task_name: str = None):
-        # LL of query + choices
         query, end_of_target = line["sentence"].split("_")
         query = capitalize(fix_ending_punct(query, lang))
         options = [

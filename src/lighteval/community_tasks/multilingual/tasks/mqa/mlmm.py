@@ -12,7 +12,7 @@ from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
 
 # trust_dataset is a bit scary and thus we lock the commit
-LANGS = Literal["en", "ar", "zh", "ru", "fr", "hi", "te"]
+LANGS = Literal["en", "ar", "zh", "ru", "fr", "hi", "te", "eu"]
 
 
 class M_HellaSwagTask(LightevalTaskConfig):

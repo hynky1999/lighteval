@@ -30,3 +30,17 @@ class XCopaTask(LightevalTaskConfig):
             trust_dataset=True,
             version=0,
         )
+
+class XCopaTaskEU(LightevalTaskConfig):
+    def __init__(self):
+        super().__init__(
+            name=f"xcopa-eu",
+            suite=("custom",),
+            prompt_function=get_copa_prompt("eu"),
+            hf_repo="HiTZ/XCOPA-eu",
+            hf_subset="xcopa",
+            evaluation_splits=("test",),
+            few_shots_split="validation",
+            metric=(Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token),
+        )

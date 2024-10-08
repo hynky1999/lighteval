@@ -54,3 +54,21 @@ class XNLI2Task(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
+
+class XNLIBasqueTask(LightevalTaskConfig):
+    def __init__(self):
+        super().__init__(
+            name=f"xnli-basque",
+            suite=("custom",),
+            prompt_function=get_xnli_prompt("eu", 2),
+            hf_repo=f"HiTZ/xnli-eu",
+            hf_subset="eu_native",
+            filter=lambda x: fix_ending_punct(x["premise"], "eu").endswith(FULL_STOP["eu"]) and int(x["label"]) in [0, 2],
+            evaluation_splits=("test",),
+            metric=(
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, 
+            ),
+            )
