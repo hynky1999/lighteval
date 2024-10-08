@@ -37,7 +37,7 @@ class CustomHellaswagThaiTask(LightevalTaskConfig):
             name=f"custom_hellaswag-th",
             prompt_function=get_hellaswag_prompt("th", use_activity_label=True),
             suite=("custom",),
-            hf_repo="HuggingFaceFW-Dev/hellaswag_thai",
+            hf_repo="lighteval/hellaswag_thai",
             hf_subset="default",
             evaluation_splits=("validation",),
             few_shots_split="train",
