@@ -72,3 +72,22 @@ class XNLIBasqueTask(LightevalTaskConfig):
                 Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, 
             ),
             )
+
+class AfriXNLITask(LightevalTaskConfig):
+    def __init__(self):
+        super().__init__(
+            name=f"afric-xnli-sw",
+            suite=("custom",),
+            prompt_function=get_xnli_prompt("sw", 2),
+            hf_repo=f"masakhane/afrixnli",
+            hf_subset="swa",
+            filter=lambda x: fix_ending_punct(x["premise"], "sw").endswith(FULL_STOP["sw"]) and int(x["label"]) in [0, 2],
+            evaluation_splits=("test",),
+            few_shots_split="validation",
+            metric=(
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, 
+            ),
+            )
