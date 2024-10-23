@@ -19,7 +19,6 @@ class TydiqaTask(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="google-research-datasets/tydiqa",
             hf_subset="secondary_task",
-            hf_revision="824c1b749da46e73930be9142d3b6815f2dded02",
             trust_dataset=True,
             filter=lambda x: x["id"].split("-")[0] == LANG_NAMES_INVERTED[lang] and (len(x["question"] + x["context"]) < max_query_length if max_query_length else True),
             evaluation_splits=("validation",),

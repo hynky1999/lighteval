@@ -670,6 +670,12 @@ def get_french_trivia_prompt(lang: LANGS):
         task_name, line["Question"], [line["Answer"]]
     )
 
+def get_mgsm_prompt(lang: LANGS):
+    prompter = _get_qa_prompt(lang)
+    return lambda line, task_name: prompter(
+        task_name, line["question"], [str(line["answer_number"])]
+    )
+
 
 # NLI premise/hypthesis
 NLI_TEMPLATE = "{premise}{full_stop}{sentence_space}{hypothesis}{comma}{sentence_space}{question_word}{question_mark}"
@@ -798,7 +804,7 @@ def get_paws_x_prompt(lang: LANGS, version: Literal[1,2]):
     # Each label has two possible values: 0 indicates the pair has different meaning, while 1 indicates the pair is a paraphrase.
     prompter = _get_nli_prompt(lang, ["entailment", "contradiction"], version)
     return lambda line, task_name: prompter(
-        task_name, line["sentence1"], line["sentence2"], int(line["label"])
+        task_name, line["sentence1"], line["sentence2"], 1-int(line["label"])
     )
 
 
@@ -893,9 +899,9 @@ def get_indic_boolq_prompt(lang: LANGS):
     prompter = _get_boolq_prompt(lang)
     return lambda line, task_name: prompter(
         task_name,
-        line["itv2 hi question"],
+        line["question"],
         line["answer"],
-        context=line["itv2 hi passage"],
+        context=line["passage"],
     )
 
 

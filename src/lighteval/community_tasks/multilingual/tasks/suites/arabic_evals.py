@@ -215,6 +215,9 @@ class CustomAlGhafaNativeTask(LightevalTaskConfig):
         )
 
 
+def create_alghafa_task(subset):
+    return CustomAlGhafaNativeTask(name=f"alghafa:{subset}", hf_subset=subset)
+
 ALGHAFA_TASKS = [
     CustomAlGhafaNativeTask(name=f"alghafa:{subset}", hf_subset=subset)
     for subset in ALGHAFA_SUBSETS
@@ -421,5 +424,5 @@ MC_TASKS = [
 
 GENERATIVE_TASKS = [
     *ACVA_TASKS,
-    # boolq_ar_task
+    boolq_ar_task
 ]

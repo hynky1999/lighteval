@@ -16,7 +16,7 @@ class MetaMMLUTask(LightevalTaskConfig):
             prompt_function=get_meta_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="meta-llama/Meta-Llama-3.1-8B-Instruct-evals",
-            hf_subset=f"Meta-Llama-3.1-8B-Instruct-evals__multilingual_mmlu_{lang}__details",
+            hf_subset=f"Llama-3.1-8B-Instruct-evals__multilingual_mmlu_{lang}__details",
             filter=lambda line: line["subtask_name"] == f"mmlu_{lang}_chat.{task}",
             evaluation_splits=("latest",),
             metric=(

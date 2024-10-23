@@ -1,5 +1,6 @@
 from typing import get_args
 
+from ..tasks.mqa.afric_mmlu import MGSMTask
 from ..tasks.qa.custom_squad import SberSquadTask
 from ..tasks.qa.mkqa import MkqaTask, TaskType
 from ..tasks.utils.tasks_helpers import tasks_to_string
@@ -33,6 +34,7 @@ _MC_TASKS = [
     XNLI2Task(lang="ru", version=2),
     XStoryClozeTask(lang="ru"),
     XWinogradeTask(lang="ru"),
+    MGSMTask(lang="ru"),
     *get_mlmm_tasks("ru"),
     *_MERA_MC_TASKS,
 ]
@@ -72,6 +74,7 @@ TASKS_GROUPS = {
     "early-signals": tasks_to_string(early_signals_generative + early_signals_mc),
     "early-signals-generative": tasks_to_string(early_signals_generative),
     "early-signals-mc": tasks_to_string(early_signals_mc),
+    "rerun": tasks_to_string([MGSMTask(lang="ru"), XNLITask(lang="ru", version=2)]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

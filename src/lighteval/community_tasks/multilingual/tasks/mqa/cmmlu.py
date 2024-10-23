@@ -84,6 +84,7 @@ class CMMLUTask(LightevalTaskConfig):
             prompt_function=get_cmllu_prompt("zh"),
             suite=("custom",),
             hf_repo="haonan-li/cmmlu",
+            trust_dataset=True,
             hf_subset=task,
             evaluation_splits=("test",),
             few_shots_split="dev",

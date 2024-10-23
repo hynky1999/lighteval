@@ -60,6 +60,7 @@ class BelebeleTask(LightevalTaskConfig):
             hf_subset="default",
             evaluation_splits=(split,),
             metric=(
+                Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_token,
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,

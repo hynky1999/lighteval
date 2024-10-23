@@ -70,6 +70,7 @@ class CEvalTask(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="ceval/ceval-exam",
             hf_subset=task,
+            trust_dataset=True,
             evaluation_splits=("val",),
             few_shots_split="dev",
             metric=(

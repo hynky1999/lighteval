@@ -1,7 +1,9 @@
 
 from typing import Literal
+
+from langcodes import standardize_tag
 from lighteval.community_tasks.multilingual.tasks.mqa.mlmm import MMLU_SUBSET
-from lighteval.community_tasks.multilingual.tasks.utils.prompts import get_mmlu_prompt, get_cmllu_prompt
+from lighteval.community_tasks.multilingual.tasks.utils.prompts import get_mgsm_prompt, get_mmlu_prompt, get_cmllu_prompt
 from lighteval.metrics.metrics import Metrics
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
@@ -31,14 +33,23 @@ class AfricMMLUTask(LightevalTaskConfig):
         )
         self.subset = subset
 
+subset_lang = {
+    "sw": "SW_KE",
+    "ar": "AR_XY",
+    "fr": "FR_FR",
+    "hi": "HI_IN",
+    "zh": "ZH_CN",
+
+}
 class OpenAIMMLUTask(LightevalTaskConfig):
-    def __init__(self, subset: MMLU_SUBSET):
+    def __init__(self, subset: MMLU_SUBSET, lang: Literal["sw", "ar", "fr", "hi", "zh"]):
         super().__init__(
-            name=f"openai-mmlu-sw:{subset}",
-            prompt_function=get_cmllu_prompt("sw"),
+            name=f"openai-mmlu-{lang}:{subset}",
+            prompt_function=get_cmllu_prompt(lang),
             suite=("custom",),
             hf_repo="openai/MMMLU",
-            hf_subset="SW_KE",
+            hf_subset=subset_lang[lang],
+            hf_revision="038c7808122969ead7456361af05cb8f47d247f8",
             filter=lambda x: x["Subject"].lower() == subset,
             trust_dataset=True,
             evaluation_splits=("test",),
@@ -54,3 +65,36 @@ class OpenAIMMLUTask(LightevalTaskConfig):
             ),
         )
         self.subset = subset
+
+class MGSMTask(LightevalTaskConfig):
+    def __init__(self, lang: Literal["sw", "fr", "ru", "zh", "th", "te"]):
+        super().__init__(
+            name=f"mgsm-{lang}",
+            prompt_function=get_mgsm_prompt(lang),
+            suite=("lighteval",),
+            hf_repo="juletxara/mgsm",
+            hf_subset=lang,
+            evaluation_splits=("test",),
+            few_shots_split="train",
+            generation_size=25,
+            metric=[
+                multilingual_quasi_exact_match_metric(lang, "full"),
+            ],
+            stop_sequence=("\n",),
+        )
+
+class AfricMGSMTask(LightevalTaskConfig):
+    def __init__(self, lang: Literal["sw"]):
+        super().__init__(
+            name=f"afric-mgsm-{lang}",
+            prompt_function=get_mgsm_prompt(lang),
+            suite=("lighteval",),
+            hf_repo="masakhane/mgsm",
+            hf_subset=lang,
+            evaluation_splits=("test",),
+            few_shots_split="train",
+            metric=[
+                multilingual_quasi_exact_match_metric(lang, "full"),
+            ],
+            generation_size=25,
+        )

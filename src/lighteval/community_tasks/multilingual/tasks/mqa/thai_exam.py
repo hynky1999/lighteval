@@ -16,7 +16,6 @@ ThaiExamSubset = Literal["a_level", "ic", "onet", "tgat", "tpat1"]
 # If too hard we can add help with para
 class ThaiExamsTask(LightevalTaskConfig):
     def __init__(self, subset: ThaiExamSubset):
-
         def invalid_answers(line):
             pos_letters = [l.lower() for l in LETTER_INDICES[:5]]
             options = [line[letter] for letter in pos_letters if letter in line]

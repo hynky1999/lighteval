@@ -36,7 +36,6 @@ class SberSquadTask(LightevalTaskConfig):
             hf_subset="sberquad",
             evaluation_splits=("validation",),
             few_shots_split="train",
-            hf_revision="92d74b272206a76fb3fec1f0355acab370a4de3a",
             trust_dataset=True,
             metric=(get_qa_metric("ru", "exact"), get_qa_metric("ru", "f1")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),

@@ -1,7 +1,9 @@
 from typing import get_args
 from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import (
+    AfricMGSMTask,
     AfricMMLUTask,
     MMLU_SUBSET,
+    MGSMTask,
     OpenAIMMLUTask,
 )
 from ..tasks.qa.custom_squad import KenswQuADTask
@@ -29,9 +31,11 @@ _MC_TASKS = [
     XNLITask(lang="sw", version=2),
     XNLI2Task(lang="sw", version=1),
     *[AfricMMLUTask(subset=subset) for subset in get_args(MMLU_SUBSET)],
-    *[OpenAIMMLUTask(subset=subset) for subset in get_args(MMLU_SUBSET)],
+    *[OpenAIMMLUTask(subset=subset, lang="sw") for subset in get_args(MMLU_SUBSET)],
     AfriXNLITask(),
     XNLI2Task(lang="sw", version=2),
+    MGSMTask(lang="sw"),
+    AfricMGSMTask(lang="sw"),
     M3ExamTask(lang="sw", version=1),
     M3ExamTask(lang="sw", version=2),
     XCSQATask(lang="sw"),
@@ -76,9 +80,10 @@ TASKS_GROUPS = {
     "early-signals-mc": tasks_to_string(early_signals_mc),
     "new_evals": tasks_to_string(
         [AfricMMLUTask(subset=subset) for subset in get_args(MMLU_SUBSET)]
-        + [OpenAIMMLUTask(subset=subset) for subset in get_args(MMLU_SUBSET)]
+        + [OpenAIMMLUTask(subset=subset, lang="sw") for subset in get_args(MMLU_SUBSET)]
         + [AfriXNLITask()]
     ),
+    "rerun": tasks_to_string([MGSMTask(lang="sw"), AfricMGSMTask(lang="sw")]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

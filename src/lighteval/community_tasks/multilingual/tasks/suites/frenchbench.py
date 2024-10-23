@@ -104,8 +104,8 @@ class TriviaFrenchTask(LightevalTaskConfig):
 
 _GENERATIVE_TASKS = [
     FQuADv2Task(),
-    # TriviaFrenchTask(),
-    # BoolQAFrenchTask(),
+    TriviaFrenchTask(),
+    BoolQAFrenchTask(),
 ]
 
 _MC_TASKS = [

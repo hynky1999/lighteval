@@ -1,5 +1,7 @@
 from typing import get_args
 
+from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMTask
+
 from ..tasks.mqa.custom_hellaswags import CustomHellaswagThaiTask
 
 from ..tasks.qa.custom_squad import ThaiQATask
@@ -69,6 +71,7 @@ TASKS_GROUPS = {
     "early-signals": tasks_to_string(early_signals_generative + early_signals_mc),
     "early-signals-generative": tasks_to_string(early_signals_generative),
     "early-signals-mc": tasks_to_string(early_signals_mc),
+    "rerun": tasks_to_string([MGSMTask(lang="th")]),
 }
 
 
