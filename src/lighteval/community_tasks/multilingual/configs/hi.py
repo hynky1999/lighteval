@@ -1,7 +1,7 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMTask
-
+from ..tasks.qa.custom_squad import ChAITask
+from ..tasks.mqa.meta_mmlu import MetaMMLUTask
 from ..tasks.qa.custom_squad import ChAITask
 from ..tasks.mqa.meta_mmlu import MetaMMLUTask
 from ..tasks.utils.tasks_helpers import tasks_to_string

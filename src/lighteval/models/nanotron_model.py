@@ -556,6 +556,8 @@ class NanotronLightevalModel(LightevalModel):
 
         # Each sample is concatenated and cut to lenght or padded to max_length
         for tokens in batch:
+            # ADD DEBUG HERE:
+            
             truncated.append(max(len(tokens) - max_context, 0))
 
             # how this all works:

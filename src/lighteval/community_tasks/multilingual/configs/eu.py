@@ -46,6 +46,9 @@ _ALL_TASKS = list(set(_GENERATIVE_TASKS + _MC_TASKS))
 
 TASKS_GROUPS = {
     "all": tasks_to_string(_ALL_TASKS),
+    "early-signals": tasks_to_string(_ALL_TASKS),
+    "early-signals-mc": tasks_to_string(_MC_TASKS),
+    "early-signals-generative": tasks_to_string(_GENERATIVE_TASKS),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

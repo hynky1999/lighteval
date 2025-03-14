@@ -20,6 +20,6 @@ class Tquad2Task(LightevalTaskConfig):
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length,
             generation_size=80,
             stop_sequence=("\n",),
-            metric=(get_qa_metric("tr", "exact"), get_qa_metric("tr", "f1")),
+            metric=(get_qa_metric("tr", "exact"), get_qa_metric("tr", "f1"), get_qa_metric("tr", "recall"), get_qa_metric("tr", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )

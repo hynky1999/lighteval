@@ -7,7 +7,7 @@ from typing import Literal
 import numpy as np
 
 from ..utils.translation_literals import LANGS
-from lighteval.metrics.metrics_sample import ExactMatches, F1_score
+from lighteval.metrics.metrics_sample import Contains, ExactMatches, F1_score, RecallF1Like
 from lighteval.metrics.utils import MetricCategory, MetricUseCase, SampleLevelMetric
 
 
@@ -16,7 +16,7 @@ PUNCT = {chr(i) for i in range(sys.maxunicode) if unicodedata.category(chr(i)).s
 )
 WHITESPACE_LANGS = ["en", "es", "hi", "vi", "de", "ar"]
 MIXED_SEGMENTATION_LANGS = ["zh"]
-EVAL_TYPE = Literal["exact", "f1"]
+EVAL_TYPE = Literal["exact", "f1", "contains", "recall"]
 
 
 # MLQA normalizer
@@ -101,8 +101,17 @@ def get_qa_scorer(lang: LANGS, evalType: EVAL_TYPE):
             normalize_gold=get_answer_normalizer(lang),
             normalize_pred=get_answer_normalizer(lang),
         ).compute
+    elif evalType == "recall":
+        return RecallF1Like(
+            normalize_gold=get_answer_normalizer(lang),
+            normalize_pred=get_answer_normalizer(lang),
+        ).compute
+    elif evalType == "contains":
+        return Contains(
+            normalize_gold=get_answer_normalizer(lang),
+            normalize_pred=get_answer_normalizer(lang),
+        ).compute
 
-    raise ValueError(f"Unknown eval type {evalType}")
 
 
 def get_qa_metric(lang: LANGS, evalType: EVAL_TYPE):
