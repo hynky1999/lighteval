@@ -134,6 +134,152 @@ class ExactMatches:
             return 1 if pred.endswith(gold) else 0
         return 1 if gold == pred else 0
 
+class Contains:
+    def __init__(
+        self,
+        aggregation_function: callable = None,
+        normalize_gold: callable = None,
+        normalize_pred: callable = None,
+        strip_strings: bool = False,
+    ):
+        """An exact match class.
+
+        Args:
+            aggregation_function (callable, optional): How to aggregate the item results. Defaults to max.
+                Used if there are several golds or predictions on which scores were computed.
+            normalize_gold (callable, optional): Function to use to normalize the reference strings.
+                Defaults to None if no normalization is applied.
+            normalize_pred (callable, optional): Function to use to normalize the predicted strings.
+                Defaults to None if no normalization is applied.
+            strip_strings (bool, optional): Whether to strip both reference and predictions. Defaults to False.
+            type_exact_match (str, optional): Defines what type of match to apply (post normalization if present).
+                Can be any of `prefix`, `suffix` or `full`. Defaults to "full".
+                `prefix` checks if the prediction starts with the gold,
+                `suffix` if the prediction ends with the gold,
+                `full` if the prediction and gold are equal
+        """
+        if aggregation_function is None:
+            aggregation_function = max
+        self.aggregation_function = aggregation_function
+        self.normalize_gold = normalize_gold
+        self.normalize_pred = normalize_pred
+        self.strip_strings = strip_strings
+
+
+    def compute(self, golds: list[str], predictions: list[str], **kwargs) -> float:
+        """Computes the metric over a list of golds and predictions for one single sample.
+
+        Args:
+            golds (list[str]): Reference targets
+            predictions (list[str]): Predicted strings
+
+        Returns:
+            float: Aggregated score over the current sample's items.
+        """
+        results = []
+        # We might need to flatten golds if they are a list of lists
+        for gold in golds:
+            for pred in predictions:
+                results.append(self.compute_one_item(gold=gold, pred=pred))
+        return self.aggregation_function(results)
+
+    def compute_one_item(
+        self,
+        gold: str,
+        pred: str,
+    ) -> float:
+        """Compares two strings only.
+
+        Args:
+            gold (str): One of the possible references
+            pred (str): One of the possible predictions
+
+        Returns:
+            float: The exact match score. Will be 1 for a match, 0 otherwise.
+        """
+        if not pred:
+            return 0
+
+        if self.strip_strings:
+            gold = gold.strip()
+            pred = pred.strip()
+
+        if self.normalize_gold:
+            gold = self.normalize_gold(gold)
+        if self.normalize_pred:
+            pred = self.normalize_pred(pred)
+
+        return 1 if gold in pred else 0
+
+
+class RecallF1Like:
+    def __init__(
+        self,
+        aggregation_function: callable = None,
+        normalize_gold: callable = None,
+        normalize_pred: callable = None,
+        strip_strings: bool = False,
+    ):
+        """An F1 score class. F1 is computed over the bag of words of the golds and predictions.
+
+        Args:
+            aggregation_function (callable, optional): How to aggregate the item results. Defaults to max.
+                Used if there are several golds or predictions on which scores were computed.
+            normalize_gold (callable, optional): Function to use to normalize the reference strings.
+                Defaults to None if no normalization is applied.
+            normalize_pred (callable, optional): Function to use to normalize the predicted strings.
+                Defaults to None if no normalization is applied.
+            strip_strings (bool, optional): Whether to strip both reference and predictions. Defaults to False.
+        """
+        if aggregation_function is None:
+            aggregation_function = max
+        self.aggregation_function = aggregation_function
+
+        self.normalize_gold = normalize_gold
+        self.normalize_pred = normalize_pred
+        self.strip_strings = strip_strings
+
+    def compute(self, golds: list[str], predictions: list[str], **kwargs) -> float:
+        """Computes the metric over a list of golds and predictions for one single sample.
+
+        Args:
+            golds (list[str]): Reference targets
+            predictions (list[str]): Predicted strings
+
+        Returns:
+            float: Aggregated score over the current sample's items.
+        """
+        results = []
+        # We might need to flatten golds if they are a list of lists
+        for gold in golds:
+            for pred in predictions:
+                results.append(self.compute_one_item(gold=gold, pred=pred))
+        return self.aggregation_function(results)
+
+    def compute_one_item(self, gold: str, pred: str) -> float:
+        """Compares two strings only.
+
+        Args:
+            gold (str): One of the possible references
+            pred (str): One of the possible predictions
+
+        Returns:
+            float: The f1 score over the bag of words, computed using nltk.
+        """
+        if self.normalize_gold:
+            gold = self.normalize_gold(gold)
+
+        if self.normalize_pred:
+            pred = self.normalize_pred(pred)
+
+        gold_bow = set(gold.split())
+        pred_bow = set(pred.split())
+
+        ret = nltk.scores.recall(gold_bow, pred_bow)
+
+        if ret is None:
+            return 0.0
+        return ret
 
 class F1_score:
     def __init__(
@@ -204,7 +350,6 @@ class F1_score:
             return 0.0
         return ret
 
-
 class LoglikelihoodAcc:
     def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False) -> None:
         """Log likelihood accuracy class. It tests if the highest log-probability of the possible choices
@@ -258,6 +403,7 @@ def safe_divide(numerator: np.ndarray, denominator: float, default_value: float 
         return np.full_like(numerator, default_value)
 
     return numerator / denominator
+
 class LoglikelihoodProb:
     def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False, return_mean: bool = True) -> None:
         """Log likelihood probability class. It tests probability of choosing the best choice.
@@ -311,6 +457,170 @@ class LoglikelihoodProb:
             correct_probs = safe_divide(correct_probs, np.sum(probs))
         return np.mean(correct_probs)
 
+class BrierScore:
+    def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False, return_mean: bool = True) -> None:
+        """Log likelihood probability class. It tests probability of choosing the best choice.
+
+        Args:
+            length_normalization (bool, optional): Whether log-likelihood scores should be normalized for sentence length. Defaults to False.
+                Should be True for most cases.
+            token_length_normalization (bool, optional): Whether log-likelihood scores should be normalized for token length. Defaults to False.
+                Should be True when the model's tokenization granularity affects the log-likelihood scores.
+            ignore_first_space (bool, optional): Whether to ignore the first token's log prob (if it's a space only). Defaults to False.
+                The only case when it should be True is when the possible choices (for example `A`,`B` ...) have an extra
+                space added in front of them to manage tokenization issues (` A`, ` B`, ...) for some models.
+        """
+        self.length_normalization = length_normalization
+        self.token_length_normalization = token_length_normalization
+        self.ignore_first_space = ignore_first_space
+        self.return_mean = return_mean
+
+    def compute(self, gold_ixs: list[int], choices_logprob: list[float], formatted_doc: Doc, choices_token_lengths: list[int] = [], **kwargs) -> float:
+        """Computes the log likelihood probability: chance of choosing the best choice.
+
+        Args:
+            gold_ixs (list[int]): All the gold choices indices
+            choices_logprob (list[float]): Summed log-probabilities of all the possible choices for the model, ordered as the choices.
+            formatted_doc (Doc): Original document for the sample.
+                Used to get the original choices' length for possible normalization
+            choices_token_lengths (list[int], optional): Token lengths of all the possible choices for the model, ordered as the choices.
+
+        Returns:
+            float: The probability of the best log-prob choice being a gold choice.
+        """
+        
+        
+
+        if self.length_normalization:
+            normalized_log_probs = []
+            for ix, choice in enumerate(formatted_doc.choices):
+                if self.ignore_first_space and choice[0] == " ":
+                    normalized_log_probs.append(choices_logprob[ix] / (len(choice) - 1))
+                else:
+                    normalized_log_probs.append(choices_logprob[ix] / len(choice))
+            choices_logprob = normalized_log_probs
+
+        if self.token_length_normalization:
+            assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
+            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+
+        probs = np.exp(choices_logprob)
+        if self.return_mean:
+            probs = safe_divide(probs, np.sum(probs))
+
+        one_hot_gold = np.zeros_like(probs)
+        one_hot_gold[gold_ixs] = 1
+        brier_score = 1 - (np.sum((probs - one_hot_gold) ** 2)) / 2
+        return np.mean(brier_score)
+
+
+class OneMinusDistanceToDominant:
+    def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False, return_mean: bool = True) -> None:
+        """Log likelihood probability class. It tests probability of choosing the best choice.
+
+        Args:
+            length_normalization (bool, optional): Whether log-likelihood scores should be normalized for sentence length. Defaults to False.
+                Should be True for most cases.
+            token_length_normalization (bool, optional): Whether log-likelihood scores should be normalized for token length. Defaults to False.
+                Should be True when the model's tokenization granularity affects the log-likelihood scores.
+            ignore_first_space (bool, optional): Whether to ignore the first token's log prob (if it's a space only). Defaults to False.
+                The only case when it should be True is when the possible choices (for example `A`,`B` ...) have an extra
+                space added in front of them to manage tokenization issues (` A`, ` B`, ...) for some models.
+        """
+        self.length_normalization = length_normalization
+        self.token_length_normalization = token_length_normalization
+        self.ignore_first_space = ignore_first_space
+        self.return_mean = return_mean
+
+    def compute(self, gold_ixs: list[int], choices_logprob: list[float], formatted_doc: Doc, choices_token_lengths: list[int] = [], **kwargs) -> float:
+        """Computes the log likelihood probability: chance of choosing the best choice.
+
+        Args:
+            gold_ixs (list[int]): All the gold choices indices
+            choices_logprob (list[float]): Summed log-probabilities of all the possible choices for the model, ordered as the choices.
+            formatted_doc (Doc): Original document for the sample.
+                Used to get the original choices' length for possible normalization
+            choices_token_lengths (list[int], optional): Token lengths of all the possible choices for the model, ordered as the choices.
+
+        Returns:
+            float: The probability of the best log-prob choice being a gold choice.
+        """
+        
+        
+
+        if self.length_normalization:
+            normalized_log_probs = []
+            for ix, choice in enumerate(formatted_doc.choices):
+                if self.ignore_first_space and choice[0] == " ":
+                    normalized_log_probs.append(choices_logprob[ix] / (len(choice) - 1))
+                else:
+                    normalized_log_probs.append(choices_logprob[ix] / len(choice))
+            choices_logprob = normalized_log_probs
+
+        if self.token_length_normalization:
+            assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
+            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+
+        probs = np.exp(choices_logprob)
+        if self.return_mean:
+            probs = safe_divide(probs, np.sum(probs))
+
+        return np.mean(1 - (np.max(probs) - np.mean(probs[gold_ixs])))
+
+
+class ThresholdedProb:
+    def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False, return_mean: bool = True) -> None:
+        """Log likelihood probability class. It tests probability of choosing the best choice.
+
+        Args:
+            length_normalization (bool, optional): Whether log-likelihood scores should be normalized for sentence length. Defaults to False.
+                Should be True for most cases.
+            token_length_normalization (bool, optional): Whether log-likelihood scores should be normalized for token length. Defaults to False.
+                Should be True when the model's tokenization granularity affects the log-likelihood scores.
+            ignore_first_space (bool, optional): Whether to ignore the first token's log prob (if it's a space only). Defaults to False.
+                The only case when it should be True is when the possible choices (for example `A`,`B` ...) have an extra
+                space added in front of them to manage tokenization issues (` A`, ` B`, ...) for some models.
+        """
+        self.length_normalization = length_normalization
+        self.token_length_normalization = token_length_normalization
+        self.ignore_first_space = ignore_first_space
+        self.return_mean = return_mean
+
+    def compute(self, gold_ixs: list[int], choices_logprob: list[float], formatted_doc: Doc, choices_token_lengths: list[int] = [], **kwargs) -> float:
+        """Computes the log likelihood probability: chance of choosing the best choice.
+
+        Args:
+            gold_ixs (list[int]): All the gold choices indices
+            choices_logprob (list[float]): Summed log-probabilities of all the possible choices for the model, ordered as the choices.
+            formatted_doc (Doc): Original document for the sample.
+                Used to get the original choices' length for possible normalization
+            choices_token_lengths (list[int], optional): Token lengths of all the possible choices for the model, ordered as the choices.
+
+        Returns:
+            float: The probability of the best log-prob choice being a gold choice.
+        """
+        
+        
+
+        if self.length_normalization:
+            normalized_log_probs = []
+            for ix, choice in enumerate(formatted_doc.choices):
+                if self.ignore_first_space and choice[0] == " ":
+                    normalized_log_probs.append(choices_logprob[ix] / (len(choice) - 1))
+                else:
+                    normalized_log_probs.append(choices_logprob[ix] / len(choice))
+            choices_logprob = normalized_log_probs
+
+        if self.token_length_normalization:
+            assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
+            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+
+        probs = np.exp(choices_logprob)
+        correct_probs = probs[gold_ixs]
+        if self.return_mean:
+            correct_probs = safe_divide(correct_probs, np.sum(probs))
+
+        return np.mean(min(2*correct_probs, 1.0))
 
 class Recall:
     def __init__(self, at: int) -> None:

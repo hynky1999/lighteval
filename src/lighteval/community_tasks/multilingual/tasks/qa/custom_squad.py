@@ -21,7 +21,7 @@ class ThaiQATask(LightevalTaskConfig):
             generation_size=70,
             stop_sequence=("\n",),
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length,
-            metric=(get_qa_metric("th", "exact"), get_qa_metric("th", "f1")),
+            metric=(get_qa_metric("th", "exact"), get_qa_metric("th", "f1"), get_qa_metric("th", "recall"), get_qa_metric("th", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )
         
@@ -37,7 +37,7 @@ class SberSquadTask(LightevalTaskConfig):
             evaluation_splits=("validation",),
             few_shots_split="train",
             trust_dataset=True,
-            metric=(get_qa_metric("ru", "exact"), get_qa_metric("ru", "f1")),
+            metric=(get_qa_metric("ru", "exact"), get_qa_metric("ru", "f1"), get_qa_metric("ru", "recall"), get_qa_metric("ru", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=50,
             stop_sequence=("\n",),
@@ -54,7 +54,7 @@ class ARCDSquadTask(LightevalTaskConfig):
             # test is less than 1k
             evaluation_splits=("train", "validation"),
             trust_dataset=True,
-            metric=(get_qa_metric("ar", "exact"), get_qa_metric("ar", "f1")),
+            metric=(get_qa_metric("ar", "exact"), get_qa_metric("ar", "f1"), get_qa_metric("ar", "recall"), get_qa_metric("ar", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=70,
             stop_sequence=("\n",),
@@ -71,7 +71,7 @@ class KenswQuADTask(LightevalTaskConfig):
             evaluation_splits=("test",),
             few_shots_split="validation",
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length,
-            metric=(get_qa_metric("sw", "exact"), get_qa_metric("sw", "f1")),
+            metric=(get_qa_metric("sw", "exact"), get_qa_metric("sw", "f1"), get_qa_metric("sw", "recall"), get_qa_metric("sw", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
             generation_size=50,
             stop_sequence=("\n",),
@@ -87,8 +87,7 @@ class ChineseSQuADTask(LightevalTaskConfig):
             hf_subset="default",
             evaluation_splits=("validation",),
             few_shots_split="train",
-            metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1")),
-            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
+            metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1"), get_qa_metric("zh", "recall"), get_qa_metric("zh", "contains")),
             generation_size=50,
             stop_sequence=("\n",),
         )
@@ -108,7 +107,7 @@ class ChAITask(LightevalTaskConfig):
             filter=lambda x: x["language"] == lang_long_name and len(x["question"] + x["context"]) < max_query_length,
             generation_size=90,
             stop_sequence=("\n",),
-            metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
+            metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1"), get_qa_metric(lang, "recall"), get_qa_metric(lang, "contains")),
         )
 
 

@@ -17,6 +17,6 @@ class CMathTask(LightevalTaskConfig):
             evaluation_splits=("test",),
             few_shots_split="validation",
             generation_size=25,
-            metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1")),
+            metric=(get_qa_metric("zh", "exact"), get_qa_metric("zh", "f1"), get_qa_metric("zh", "recall"), get_qa_metric("zh", "contains")),
             stop_sequence=("\n",),
         )

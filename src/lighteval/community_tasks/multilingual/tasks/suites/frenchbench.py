@@ -23,7 +23,18 @@ class FrenchARCTask(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
@@ -40,7 +51,18 @@ class FrenchHellaSwagTask(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
@@ -62,7 +84,18 @@ class BoolQAFrenchTask(LightevalTaskConfig):
                 get_qa_metric("fr", "exact"),
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
@@ -80,7 +113,7 @@ class FQuADv2Task(LightevalTaskConfig):
             few_shots_split="valid_hasAns",
             generation_size=80,
             stop_sequence=("\n",),
-            metric=(get_qa_metric("fr", "exact"), get_qa_metric("fr", "f1")),
+            metric=(get_qa_metric("fr", "exact"), get_qa_metric("fr", "f1"), get_qa_metric("fr", "recall"), get_qa_metric("fr", "contains")),
             # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )
     
@@ -96,7 +129,7 @@ class TriviaFrenchTask(LightevalTaskConfig):
             evaluation_splits=("train",),
             generation_size=100,
             stop_sequence=("\n",),
-            metric=(get_qa_metric("fr", "exact"), get_qa_metric("fr", "f1")),
+            metric=(get_qa_metric("fr", "exact"), get_qa_metric("fr", "f1"), get_qa_metric("fr", "recall"), get_qa_metric("fr", "contains")),
         )
 
 

@@ -1,6 +1,5 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMTask
 from ..tasks.mqa.custom_hellaswags import CustomHellaswagTeluguTask
 from ..tasks.utils.tasks_helpers import tasks_to_string
 from ..tasks.qa.Indicqa import IndicQATask
@@ -23,7 +22,7 @@ _MC_TASKS = [
     XCopaIndicTask(lang="te"),
     BelebeleTask(lang="te"),
     XStoryClozeTask(lang="te"),
-    MGSMTask(lang="te"),
+    # MGSMTask(lang="te"),
     CustomHellaswagTeluguTask(),
     *get_mlmm_tasks("te")
 ]
@@ -52,7 +51,7 @@ TASKS_GROUPS = {
     "early-signals": tasks_to_string(early_signals_mc + early_signals_generative),
     "early-signals-mc": tasks_to_string(early_signals_mc),
     "early-signals-generative": tasks_to_string(early_signals_generative),
-    "rerun": tasks_to_string([MGSMTask(lang="te")]),
+    # "rerun": tasks_to_string([MGSMTask(lang="te")]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _GENERATIVE_TASKS + _MC_TASKS]

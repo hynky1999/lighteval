@@ -1,6 +1,6 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMTask
+# from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMTask
 
 from ..tasks.qa.custom_squad import ChineseSQuADTask
 from ..tasks.utils.tasks_helpers import tasks_to_string
@@ -50,7 +50,7 @@ _MC_TASKS = [
     M3ExamTask(lang="zh", version=1),
     M3ExamTask(lang="zh", version=2),
     C3Task(),
-    MGSMTask(lang="zh"),
+    # MGSMTask(lang="zh"),
     *[CMMLUTask(task) for task in get_args(CMMLU_TASK_TYPE)],
     *[CEvalTask(task, show_options=False, join_variant=join_variant) for task in get_args(CEVAL_TASK_TYPE) for join_variant in get_args(MULTICHOICE_JOIN_VARIANT)],
     *[ChineseAgievalTask(task, show_options=False, join_variant=join_variant) for task in get_args(CHINESE_AGIEVAL_TASK_TYPE) for join_variant in get_args(MULTICHOICE_JOIN_VARIANT)],
@@ -101,7 +101,7 @@ TASKS_GROUPS = {
     "early-signals-generative": tasks_to_string(early_signals_generative),
     "early-signals-mc": tasks_to_string(early_signals_mc),
     "early-signals": tasks_to_string(early_signals_generative + early_signals_mc),
-    "rerun": tasks_to_string([MGSMTask(lang="zh")]),
+    # "rerun": tasks_to_string([MGSMTask(lang="zh")]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

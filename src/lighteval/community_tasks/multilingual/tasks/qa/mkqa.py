@@ -58,5 +58,5 @@ class MkqaTask(LightevalTaskConfig):
             evaluation_splits=("train",),
             generation_size=50,
             stop_sequence=("\n",),
-            metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
+            metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1"), get_qa_metric(lang, "recall"), get_qa_metric(lang, "contains")),
         )

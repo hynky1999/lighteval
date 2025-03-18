@@ -40,14 +40,17 @@ from lighteval.metrics.metrics_sample import (
     MRR,
     ROUGE,
     BertScore,
+    BrierScore,
     ExactMatches,
     F1_score,
     JudgeLLM,
     LoglikelihoodAcc,
     LoglikelihoodProb,
     MajAtK,
+    OneMinusDistanceToDominant,
     Recall,
     StringDistance,
+    ThresholdedProb,
     acc_golds_likelihood,
     extractiveness,
     faithfulness,
@@ -270,6 +273,102 @@ class Metrics(Enum):
     loglikelihood_prob = SampleLevelMetric(
         metric="prob",
         sample_level_fn=LoglikelihoodProb().compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    one_minus_distance_to_dominant_prob_norm = SampleLevelMetric(
+        metric="one_minus_distance_to_dominant_prob_norm",
+        sample_level_fn=OneMinusDistanceToDominant(length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    one_minus_distance_to_dominant_prob_norm_token = SampleLevelMetric(
+        metric="one_minus_distance_to_dominant_prob_norm_token",
+        sample_level_fn=OneMinusDistanceToDominant(token_length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    one_minus_distance_to_dominant_prob_norm_pmi = SampleLevelMetric(
+        metric="one_minus_distance_to_dominant_prob_norm_pmi",
+        sample_level_fn=OneMinusDistanceToDominant(return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE_PMI,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    one_minus_distance_to_dominant_prob = SampleLevelMetric(
+        metric="one_minus_distance_to_dominant_prob",
+        sample_level_fn=OneMinusDistanceToDominant(return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    thresholded_prob_norm = SampleLevelMetric(
+        metric="thresholded_prob_norm",
+        sample_level_fn=ThresholdedProb(length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    thresholded_prob_token = SampleLevelMetric(
+        metric="thresholded_prob_norm_token",
+        sample_level_fn=ThresholdedProb(token_length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    thresholded_prob_pmi = SampleLevelMetric(
+        metric="thresholded_prob_norm_pmi",
+        sample_level_fn=ThresholdedProb(return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE_PMI,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    thresholded_prob = SampleLevelMetric(
+        metric="thresholded_prob",
+        sample_level_fn=ThresholdedProb(return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    brier_score_norm = SampleLevelMetric(
+        metric="brier_score_norm",
+        sample_level_fn=BrierScore(length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    brier_score_token = SampleLevelMetric(
+        metric="brier_score_norm_token",
+        sample_level_fn=BrierScore(token_length_normalization=True, return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    brier_score_pmi = SampleLevelMetric(
+        metric="brier_score_norm_pmi",
+        sample_level_fn=BrierScore(return_mean=True).compute,
+        category=MetricCategory.MULTICHOICE_PMI,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    brier_score = SampleLevelMetric(
+        metric="brier_score",
+        sample_level_fn=BrierScore(return_mean=True).compute,
         category=MetricCategory.MULTICHOICE,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,

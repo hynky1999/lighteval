@@ -570,7 +570,7 @@ def get_openbookqa_prompt(lang: LANGS):
 
 
 # QA-Tasks (No multichoice)
-QA_TEMPLATE = "{topic}{context}{question_word}{colon}{sentence_space}{question}\n{answer_word}{colon}{sentence_space}"
+QA_TEMPLATE = "{topic}{context}{question_word}{colon}{sentence_space}{question}\n{answer_word}{colon}"
 
 
 def _get_qa_prompt(lang: LANGS):

@@ -1,7 +1,5 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import AfricMMLUTask
-
 from ..tasks.qa.mkqa import MkqaTask, TaskType
 
 from ..tasks.mqa.exams import ExamsTask, subjects_by_lang_code

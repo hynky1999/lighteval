@@ -27,11 +27,22 @@ class XNLITask(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
-            ),
+            )
         )
-
+            
 
 class XNLI2Task(LightevalTaskConfig):
     # Revised version of xnli
@@ -50,7 +61,18 @@ class XNLI2Task(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
             ),
         )
@@ -68,7 +90,18 @@ class XNLIBasqueTask(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, 
             ),
             )
@@ -87,7 +120,18 @@ class AfriXNLITask(LightevalTaskConfig):
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_token,
+                                Metrics.thresholded_prob_norm,
+                Metrics.thresholded_prob_token,
+                Metrics.thresholded_prob_pmi,
+                Metrics.thresholded_prob,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
+                Metrics.one_minus_distance_to_dominant_prob_norm,
+                Metrics.one_minus_distance_to_dominant_prob_norm_token,
+                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
+                Metrics.one_minus_distance_to_dominant_prob,
                 Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token, 
             ),
             )
