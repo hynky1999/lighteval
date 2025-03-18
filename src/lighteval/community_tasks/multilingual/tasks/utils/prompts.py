@@ -7,6 +7,7 @@ from typing import Any, Literal, Optional, Callable
 
 from lighteval.logging.hierarchical_logger import hlog
 from lighteval.utils import as_list
+import ast
 
 from ..utils.translation_literals import (
     ANSWER,
@@ -253,6 +254,18 @@ def get_thai_exams_prompt(lang: LANGS):
     return adapter
 
 
+def get_commonsenseqa_prompt(lang: LANGS):
+    prompter = _get_multi_qa_prompt(lang)
+    def adapter(line, task_name):
+        choices = [line[f"choice{i}"] for i in range(0,5)]
+        return prompter(
+            task_name,
+            line["question"],
+            choices,
+            line["label"],
+        )
+    return adapter
+
 def get_ar_mmlu_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)
     return lambda line, task_name: prompter(
@@ -261,7 +274,20 @@ def get_ar_mmlu_prompt(lang: LANGS):
         [line["A"], line["B"], line["C"], line["D"]],
         LETTER_INDICES.index(line["answer"]),
     )
-    
+
+def get_indommlu_prompt(lang: LANGS):
+    prompter = _get_multi_qa_prompt(lang)
+    def adapter(line, task_name):
+        options = ast.literal_eval(line["options"])
+        options = [o[3:] for o in options]
+        return prompter(
+            task_name,
+            line["question"],
+            options,
+            LETTER_INDICES.index(line["answer"]),
+        )
+    return adapter
+
 def get_meta_mmlu_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)
     return lambda line, task_name: prompter(
@@ -798,6 +824,16 @@ def get_cmnli_prompt(lang: LANGS, version: Literal[1,2]):
     }
     return lambda line, task_name: prompter(
         task_name, line["sentence1"], line["sentence2"], label_map[line["label"]]
+    )
+
+def get_jnli_prompt(lang: LANGS, version: Literal[1,2]):
+    prompter = _get_nli_prompt(lang, ["entailment", "contradiction"], version)
+    label_map = {
+        0: 0,
+        1: 1,
+    }
+    return lambda line, task_name: prompter(
+        task_name, line["sentence1"], line["sentence2"], label_map[int(line["label"])]
     )
 
 def get_paws_x_prompt(lang: LANGS, version: Literal[1,2]):

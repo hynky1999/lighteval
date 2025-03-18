@@ -1,11 +1,10 @@
-
 from typing import get_args
 
-from ..tasks.mqa.xcopa import XCopaTaskEU
-
-from ..tasks.mqa_with_context.xstory_cloze import XStoryClozeTask
-
-from ..tasks.qa.custom_squad import BasqueSquad
+from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import AfricMMLUTask
+from lighteval.community_tasks.multilingual.tasks.mqa.jglue import JNLI, JCommonsenseQA, JampTask
+from lighteval.community_tasks.multilingual.tasks.qa.custom_squad import JapaneseSQuADTask
+from lighteval.community_tasks.multilingual.tasks.mqa.japanese_mmlu import JapaneseMMLUTask, JMMLU_TASK_TYPE
+from lighteval.community_tasks.multilingual.tasks.qa.tydiqa import TydiqaTask
 
 from ..tasks.qa.mkqa import MkqaTask, TaskType
 
@@ -18,32 +17,30 @@ from ..tasks.mqa.mlmm import get_mlmm_tasks
 from ..tasks.mqa_with_context.belebele import BelebeleTask
 from ..tasks.nli.pawns import PawnsXTask
 from ..tasks.nli.xcsr import XCODAHTask, XCSQATask
-from ..tasks.nli.xnli import XNLI2Task, XNLIBasqueTask, XNLITask
+from ..tasks.nli.xnli import XNLI2Task, XNLITask
 from ..tasks.nli.xwinograd import XWinogradeTask
 from ..tasks.suites.frenchbench import _GENERATIVE_TASKS as _FRENCH_BENCH_GENERATIVE_TASKS, _MC_TASKS as _FRENCH_BENCH_MC_TASKS
-from ..tasks.suites.eus_evals import BasqueRC, BasqueReadingProficiency, BasqueTrivia, BasqueExams, EXAMS_SUBSETS, BertaQATask
-
+from ..tasks.mqa.meta_mmlu import MetaMMLUTask, MMLU_SUBSET
 
 _GENERATIVE_TASKS = [
-    BasqueSquad(lang="eu"),
+    MintakaTask(lang="jp"),
+    TydiqaTask(lang="jp"),
+    JapaneseSQuADTask(),
 ]
 
 _MC_TASKS = [
-    XNLIBasqueTask(),
-    BertaQATask(lang="eu"),
-    *get_mlmm_tasks("eu"),
-    XStoryClozeTask(lang="eu"),
-    BelebeleTask(lang="eu"),
-    XCopaTaskEU(),
-    BasqueRC(),
-    BasqueTrivia(),
-    *[BasqueExams(subset=subset) for subset in EXAMS_SUBSETS],
-    BasqueReadingProficiency()
+    BelebeleTask(lang="jp"),
+    PawnsXTask(lang="jp", version=2),
+    XCODAHTask(lang="jp"),
+    XCSQATask(lang="jp"),
+    *[JapaneseMMLUTask(task) for task in get_args(JMMLU_TASK_TYPE)],
+    XWinogradeTask(lang="jp"),
+    JNLI(version=2),
+    JampTask(version=2),
+    JCommonsenseQA(),
 ]
 
 _ALL_TASKS = list(set(_GENERATIVE_TASKS + _MC_TASKS))
-
-
 TASKS_GROUPS = {
     "all": tasks_to_string(_ALL_TASKS),
     "early-signals": tasks_to_string(_MC_TASKS + _GENERATIVE_TASKS),

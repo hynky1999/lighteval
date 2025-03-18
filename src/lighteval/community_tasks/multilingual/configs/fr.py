@@ -1,6 +1,6 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import MGSMMLUTask, MGSMTask
+from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import AfricMMLUTask
 
 from ..tasks.qa.mkqa import MkqaTask, TaskType
 
@@ -36,7 +36,6 @@ _MC_TASKS = [
     XNLI2Task(lang="fr", version=1),
     XNLI2Task(lang="fr", version=2),
     XWinogradeTask(lang="fr"),
-    MGSMTask(lang="fr"),
     *get_mlmm_tasks("fr"),
     *_FRENCH_BENCH_MC_TASKS,
     *[MetaMMLUTask("fr", subset) for subset in get_args(MMLU_SUBSET)],
@@ -79,7 +78,6 @@ TASKS_GROUPS = {
     "early-signals-generative": tasks_to_string(early_signals_generative),
     "early-signals-mc": tasks_to_string(early_signals_mc),
     "early-signals": tasks_to_string(early_signals_generative + early_signals_mc),
-    "rerun": tasks_to_string([PawnsXTask(lang="fr", version=2), MGSMTask(lang="fr")]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

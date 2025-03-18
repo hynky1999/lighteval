@@ -128,3 +128,37 @@ class BasqueSquad(LightevalTaskConfig):
             stop_sequence=("\n",),
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
         )
+
+
+
+class ItalianSQuADTask(LightevalTaskConfig):
+    def __init__(self):
+        super().__init__(
+            name=f"squad-it",
+            prompt_function=get_mlqa_prompt("it"),
+            suite=("custom",),
+            hf_repo="crux82/squad_it",
+            hf_subset="default",
+            evaluation_splits=("train",),
+            few_shots_split="test",
+            generation_size=200,
+            stop_sequence=("\n",),
+            metric=(get_qa_metric("it", "exact"), get_qa_metric("it", "f1")),
+        )
+
+
+class JapaneseSQuADTask(LightevalTaskConfig):
+    def __init__(self):
+        super().__init__(
+            name=f"squad-jp",
+            prompt_function=get_mlqa_prompt("jp"),
+            suite=("custom",),
+            hf_repo="sbintuitions/JSQuAD",
+            hf_subset="default",
+            evaluation_splits=("train",),
+            few_shots_split="validation ",
+            filter=lambda line: line["is_impossible"] == False,
+            generation_size=200,
+            stop_sequence=("\n",),
+            metric=(get_qa_metric("jp", "exact"), get_qa_metric("jp", "f1")),
+        )

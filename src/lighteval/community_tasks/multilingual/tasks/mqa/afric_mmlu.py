@@ -78,7 +78,7 @@ class MGSMTask(LightevalTaskConfig):
             few_shots_split="train",
             generation_size=25,
             metric=[
-                multilingual_quasi_exact_match_metric(lang, "full"),
+                # multilingual_quasi_exact_match_metric(lang, "full"),
             ],
             stop_sequence=("\n",),
         )
@@ -94,7 +94,7 @@ class AfricMGSMTask(LightevalTaskConfig):
             evaluation_splits=("test",),
             few_shots_split="train",
             metric=[
-                multilingual_quasi_exact_match_metric(lang, "full"),
+                # multilingual_quasi_exact_match_metric(lang, "full"),
             ],
             generation_size=25,
         )

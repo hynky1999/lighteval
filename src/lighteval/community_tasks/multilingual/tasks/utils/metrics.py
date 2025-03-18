@@ -14,8 +14,8 @@ from lighteval.metrics.utils import MetricCategory, MetricUseCase, SampleLevelMe
 PUNCT = {chr(i) for i in range(sys.maxunicode) if unicodedata.category(chr(i)).startswith("P")}.union(
     string.punctuation
 )
-WHITESPACE_LANGS = ["en", "es", "hi", "vi", "de", "ar"]
-MIXED_SEGMENTATION_LANGS = ["zh"]
+WHITESPACE_LANGS = ["en", "es", "hi", "vi", "de", "ar", "de", "eu", "it", "id"]
+MIXED_SEGMENTATION_LANGS = ["zh", "jp"]
 EVAL_TYPE = Literal["exact", "f1"]
 
 
@@ -61,6 +61,10 @@ def get_answer_normalizer(lang: LANGS):
             return re.sub(r"\b(bir)\b", " ", text)
         elif lang == "th":
             return re.sub(r"(คน|ตัว|ลูก)", " ", text)
+        elif lang == "de":
+            return re.sub(r"\b(ein|eine|der|die|das)\b", " ", text)
+        elif lang == "it":
+            return re.sub(r"\b(un|una|il|lo|la)\b", " ", text)
         else:
             # TODO: raise Exception("Unknown Language {}".format(lang))
             return text
@@ -74,6 +78,11 @@ def get_answer_normalizer(lang: LANGS):
         elif lang == "th":
             from pythainlp.tokenize import word_tokenize
             tokens = word_tokenize(text, keep_whitespace=False, engine="newmm")
+        elif lang == "jp":
+            from sudachipy import tokenizer, dictionary
+            tokenizer_obj = dictionary.Dictionary().create()
+            mode = tokenizer.Tokenizer.SplitMode.A
+            tokens = [m.surface() for m in tokenizer_obj.tokenize(text, mode)]
         else:
             # TODO: raise Exception("Unknown Language {}".format(lang))
             # assume whitespace
