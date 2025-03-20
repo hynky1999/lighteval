@@ -8,7 +8,11 @@
 # # from lighteval.metrics.metrics import Metrics
 # # from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
-# # class AfricMMLUTask(LightevalTaskConfig):
+from lighteval.tasks.lighteval_task import LightevalTaskConfig
+
+
+class AfricMMLUTask(LightevalTaskConfig):
+    pass
 # #     def __init__(self, subset: MMLU_SUBSET):
 # #         super().__init__(
 # #             name=f"afric-mmlu-sw:{subset}",

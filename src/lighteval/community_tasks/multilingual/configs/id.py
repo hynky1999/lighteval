@@ -41,6 +41,7 @@ _ALL_TASKS = list(set(_GENERATIVE_TASKS + _MC_TASKS))
 TASKS_GROUPS = {
     "early-signals": tasks_to_string(_MC_TASKS + _GENERATIVE_TASKS),
     "all": tasks_to_string(_ALL_TASKS),
+    "mmlu": tasks_to_string([task for task in _ALL_TASKS if isinstance(task, IndonesianMMLUTask)]),
 }
 
 TASKS_TABLE = [task.as_dict() for task in _ALL_TASKS]

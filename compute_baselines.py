@@ -103,6 +103,7 @@ def compute_baseline(
         task_docs = list(task.eval_docs())
         n_samples = min(max_samples, len(task_docs)) if max_samples else len(task_docs)
 
+        print(task_name)
         p_correct_score = [
             len(as_list(task_doc.gold_index)) / len(task_doc.choices) for task_doc in task_docs[:n_samples]
         ]

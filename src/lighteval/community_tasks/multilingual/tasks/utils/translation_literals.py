@@ -58,7 +58,8 @@ OPTIONS = {
     "tr": "Seçenekler",
     "fr": "Possibilités",
     "ar": "خيارات",
-    "zh": "选项"
+    "zh": "选项",
+    "it": "opzioni",
 }
 
 ANSWER = {

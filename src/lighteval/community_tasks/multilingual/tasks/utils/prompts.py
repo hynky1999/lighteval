@@ -612,6 +612,9 @@ def get_mlqa_prompt(lang: LANGS, answer_key: str = "text"):
     def adapter(line, task_name):
         # remove empty answers
         answers = [ans for ans in line["answers"][answer_key] if len(ans) > 0]
+        if len(answers) == 0:
+            return None
+
         return prompter(
             task_name, line["question"], answers, line["context"]
         )

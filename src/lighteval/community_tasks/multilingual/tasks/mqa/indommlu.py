@@ -42,9 +42,10 @@ class IndonesianMMLUTask(LightevalTaskConfig):
             prompt_function=get_indommlu_prompt("id"),
             suite=("custom",),
             hf_repo="indolem/IndoMMLU",
+            hf_subset="default",
             trust_dataset=True,
-            hf_subset=task,
             evaluation_splits=("test",),
+            filter=lambda line: line["subject"] == task,
             few_shots_split="train",
             metric=(
                 Metrics.loglikelihood_acc,

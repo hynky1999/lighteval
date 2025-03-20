@@ -40,6 +40,9 @@ class BelebeleTask(LightevalTaskConfig):
         # TODO: beleble now uses actually config name, until i update the code I am locking the revision
         if lang == "zh":
             splits = ["zho_Hans"]
+
+        if lang == "jp":
+            splits = ["jpn_Jpan"]
         else:
             splits = [
                 split

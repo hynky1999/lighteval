@@ -12,7 +12,7 @@ class JampTask(LightevalTaskConfig):
             prompt_function=get_xnli_prompt("jp", version),
             suite=("custom",),
             hf_repo="zenless-lab/jamp",
-            hf_subset="base",
+            hf_subset="default",
             # Only keep the positive and negative examples
             filter=lambda x: int(x["label"]) in [1, 2],
             evaluation_splits=("test",),
@@ -37,6 +37,7 @@ class JNLI(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="shunk031/JGLUE",
             hf_subset="JNLI",
+            trust_dataset=True,
             # Only keep the positive and negative examples
             filter=lambda x: int(x["label"]) in [0, 1],
             evaluation_splits=("test",),
@@ -61,6 +62,7 @@ class JCommonsenseQA(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="leemeng/jcommonsenseqa-v1.1",
             hf_subset="default",
+            trust_dataset=True,
             evaluation_splits=("validation",),
             few_shots_split="train",
             metric=(

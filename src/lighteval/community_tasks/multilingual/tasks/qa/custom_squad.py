@@ -137,6 +137,7 @@ class ItalianSQuADTask(LightevalTaskConfig):
             prompt_function=get_mlqa_prompt("it"),
             suite=("custom",),
             hf_repo="crux82/squad_it",
+            filter=lambda line: len(line["answers"]["text"]) > 0,
             hf_subset="default",
             evaluation_splits=("train",),
             few_shots_split="test",

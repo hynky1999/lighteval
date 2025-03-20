@@ -1,6 +1,5 @@
 from typing import get_args
 
-from lighteval.community_tasks.multilingual.tasks.mqa.afric_mmlu import AfricMMLUTask
 from lighteval.community_tasks.multilingual.tasks.mqa_with_context.m3exam import M3ExamTask
 from lighteval.community_tasks.multilingual.tasks.qa.custom_squad import ItalianSQuADTask
 
