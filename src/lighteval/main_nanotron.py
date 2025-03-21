@@ -119,6 +119,7 @@ def main(
             debug_one_layer_model=False,
             model_class=model_cls,
             env_config=env_config,
+            trust_remote_code=True
         )
         model_info = ModelInfo(model_name=f"{nanotron_config.general.run}/{nanotron_config.general.step}")
         evaluation_tracker.general_config_logger.log_model_info(model_info)
