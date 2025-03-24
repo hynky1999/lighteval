@@ -41,7 +41,7 @@ class BelebeleTask(LightevalTaskConfig):
         if lang == "zh":
             splits = ["zho_Hans"]
 
-        if lang == "jp":
+        elif lang == "jp":
             splits = ["jpn_Jpan"]
         else:
             splits = [
