@@ -1,6 +1,6 @@
 from typing import Literal
 from ..utils.metrics import get_qa_metric
-from ..utils.prompts import get_c3_prompt, get_cmnli_prompt, get_commonsenseqa_prompt, get_jnli_prompt, get_mlqa_prompt, get_ocnli_prompt, get_xnli_prompt
+from ..utils.prompts import fix_ending_punct, get_c3_prompt, get_cmnli_prompt, get_commonsenseqa_prompt, get_jnli_prompt, get_mlqa_prompt, get_ocnli_prompt, get_xnli_prompt
 from lighteval.metrics.metrics import Metrics
 from ..utils.translation_literals import FULL_STOP
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
@@ -14,7 +14,7 @@ class JampTask(LightevalTaskConfig):
             hf_repo="zenless-lab/jamp",
             hf_subset="default",
             # Only keep the positive and negative examples
-            filter=lambda x: int(x["label"]) in [1, 2],
+            filter=lambda x: fix_ending_punct(x["premise"], "jp").endswith(FULL_STOP["jp"]) and int(x["label"]) in [0, 2],
             evaluation_splits=("test",),
             few_shots_split="train",
             metric=(
@@ -39,8 +39,8 @@ class JNLI(LightevalTaskConfig):
             hf_subset="JNLI",
             trust_dataset=True,
             # Only keep the positive and negative examples
-            filter=lambda x: int(x["label"]) in [0, 1],
-            evaluation_splits=("test",),
+            filter=lambda x: fix_ending_punct(x["sentence1"], "jp").endswith(FULL_STOP["jp"]) and fix_ending_punct(x["sentence2"], "jp").endswith(FULL_STOP["jp"]) and int(x["label"]) in [0, 1],
+            evaluation_splits=("validation",),
             few_shots_split="train",
             metric=(
                 Metrics.loglikelihood_acc,

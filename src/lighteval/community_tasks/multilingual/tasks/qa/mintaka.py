@@ -13,12 +13,13 @@ LANGS = Literal["ar", "de", "en", "es", "fr", "hi", "it", "ja", "pt"]
 
 class MintakaTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
+        subset_lang = "ja" if lang == "jp" else lang
         super().__init__(
             name=f"mintaka-{lang}",
             prompt_function=get_mintaka_prompt(lang),
             suite=("custom",),
             hf_repo="AmazonScience/mintaka",
-            hf_subset=lang,
+            hf_subset=subset_lang,
             evaluation_splits=("test",),
             few_shots_split="train",
             generation_size=75,

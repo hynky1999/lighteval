@@ -10,13 +10,14 @@ LANGS = Literal["ar", "de", "en", "es", "fr", "hi", "it", "ja", "nl", "pl", "pt"
 
 class XCODAHTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
+        subset_lang = "jap" if lang == "jp" else lang
         self.lang = lang
         super().__init__(
             name=f"x-codah-{lang}",
             prompt_function=get_xcodah_prompt(lang),
             suite=("custom",),
             hf_repo="INK-USC/xcsr",
-            hf_subset=f"X-CODAH-{lang}",
+            hf_subset=f"X-CODAH-{subset_lang}",
             evaluation_splits=("validation",),
             metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,                 Metrics.thresholded_prob_norm,
                 Metrics.thresholded_prob_token,
@@ -36,13 +37,14 @@ class XCODAHTask(LightevalTaskConfig):
 
 class XCSQATask(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
+        subset_lang = "jap" if lang == "jp" else lang
         self.lang = lang
         super().__init__(
             name=f"x-csqa-{lang}",
             prompt_function=get_m_xcsr_prompt(lang),
             suite=("custom",),
             hf_repo="INK-USC/xcsr",
-            hf_subset=f"X-CSQA-{lang}",
+            hf_subset=f"X-CSQA-{subset_lang}",
             filter=lambda x: all(len(x["question"]["choices"]["text"][i].strip()) > 0 for i in range(len(x["question"]["choices"]["text"]))),
             evaluation_splits=("validation",),
             generation_size=-1,

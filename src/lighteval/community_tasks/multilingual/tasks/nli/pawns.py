@@ -12,12 +12,13 @@ LANGS = Literal["de", "en", "es", "fr", "ja", "ko", "zh"]
 
 class PawnsXTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS, version: Literal[1, 2]):
+        subset_lang = "ja" if lang == "jp" else lang
         super().__init__(
             name=f"pawns{f'-v{version}' if version != 1 else ''}-{lang}",
             suite=("custom",),
             prompt_function=get_paws_x_prompt(lang, version=version),
             hf_repo="google-research-datasets/paws-x",
-            hf_subset=lang,
+            hf_subset=subset_lang,
             filter=lambda x: x["sentence1"].endswith(FULL_STOP[lang]),
             evaluation_splits=("test",),
             few_shots_split="train",
