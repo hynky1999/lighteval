@@ -24,5 +24,4 @@ class XquadTask(LightevalTaskConfig):
             generation_size=100,
             stop_sequence=("\n",),
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1"), get_qa_metric(lang, "recall"), get_qa_metric(lang, "contains")),
-            # metric=(Metrics.prob_raw, Metrics.prob_raw_norm, Metrics.prob_raw_norm_token),
         )

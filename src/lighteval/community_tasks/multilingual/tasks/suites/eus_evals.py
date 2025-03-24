@@ -13,19 +13,20 @@ class BasqueRC(LightevalTaskConfig):
             hf_repo="HiTZ/EusReading",
             hf_subset="default",
             evaluation_splits=("test",),
-            metric=(Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                                Metrics.thresholded_prob_norm,
-                Metrics.thresholded_prob_token,
-                Metrics.thresholded_prob_pmi,
-                Metrics.thresholded_prob,
+            metric=(
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_acc_norm_pmi,
                 Metrics.brier_score_norm,
                 Metrics.brier_score_token,
                 Metrics.brier_score_pmi,
                 Metrics.brier_score,
-                Metrics.one_minus_distance_to_dominant_prob_norm,
-                Metrics.one_minus_distance_to_dominant_prob_norm_token,
-                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
-                Metrics.one_minus_distance_to_dominant_prob, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token),
+                Metrics.loglikelihood_prob,
+                Metrics.loglikelihood_prob_norm,
+                Metrics.loglikelihood_prob_norm_token,
+                Metrics.loglikelihood_prob_norm_pmi, 
+            )
         )
 
     
@@ -38,19 +39,19 @@ class BasqueTrivia(LightevalTaskConfig):
             hf_repo="HiTZ/EusTrivia",
             hf_subset="default",
             evaluation_splits=("test",),
-            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                                Metrics.thresholded_prob_norm,
-                Metrics.thresholded_prob_token,
-                Metrics.thresholded_prob_pmi,
-                Metrics.thresholded_prob,
+            metric=[
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_acc_norm_pmi,
                 Metrics.brier_score_norm,
                 Metrics.brier_score_token,
                 Metrics.brier_score_pmi,
                 Metrics.brier_score,
-                Metrics.one_minus_distance_to_dominant_prob_norm,
-                Metrics.one_minus_distance_to_dominant_prob_norm_token,
-                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
-                Metrics.one_minus_distance_to_dominant_prob, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token
+                Metrics.loglikelihood_prob,
+                Metrics.loglikelihood_prob_norm,
+                Metrics.loglikelihood_prob_norm_token,
+                Metrics.loglikelihood_prob_norm_pmi, 
             ]
         )
 
@@ -128,19 +129,19 @@ class BasqueExams(LightevalTaskConfig):
             hf_subset=subset,
             filter=lambda line: line["answer"] is not None,
             evaluation_splits=("test",),
-            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                                Metrics.thresholded_prob_norm,
-                Metrics.thresholded_prob_token,
-                Metrics.thresholded_prob_pmi,
-                Metrics.thresholded_prob,
+            metric=[
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_acc_norm_pmi,
                 Metrics.brier_score_norm,
                 Metrics.brier_score_token,
                 Metrics.brier_score_pmi,
                 Metrics.brier_score,
-                Metrics.one_minus_distance_to_dominant_prob_norm,
-                Metrics.one_minus_distance_to_dominant_prob_norm_token,
-                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
-                Metrics.one_minus_distance_to_dominant_prob, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token
+                Metrics.loglikelihood_prob,
+                Metrics.loglikelihood_prob_norm,
+                Metrics.loglikelihood_prob_norm_token,
+                Metrics.loglikelihood_prob_norm_pmi, 
             ]
         )
     
@@ -154,19 +155,19 @@ class BasqueReadingProficiency(LightevalTaskConfig):
             hf_repo="HiTZ/EusProficiency",
             hf_subset="default",
             evaluation_splits=("test",),
-            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                                Metrics.thresholded_prob_norm,
-                Metrics.thresholded_prob_token,
-                Metrics.thresholded_prob_pmi,
-                Metrics.thresholded_prob,
+            metric=[
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_acc_norm_pmi,
                 Metrics.brier_score_norm,
                 Metrics.brier_score_token,
                 Metrics.brier_score_pmi,
                 Metrics.brier_score,
-                Metrics.one_minus_distance_to_dominant_prob_norm,
-                Metrics.one_minus_distance_to_dominant_prob_norm_token,
-                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
-                Metrics.one_minus_distance_to_dominant_prob, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token
+                Metrics.loglikelihood_prob,
+                Metrics.loglikelihood_prob_norm,
+                Metrics.loglikelihood_prob_norm_token,
+                Metrics.loglikelihood_prob_norm_pmi, 
             ]
         )
 
@@ -180,18 +181,18 @@ class BertaQATask(LightevalTaskConfig):
             hf_repo="HiTZ/BertaQA",
             hf_subset="eu",
             evaluation_splits=("test",),
-            metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace,
-                                Metrics.thresholded_prob_norm,
-                Metrics.thresholded_prob_token,
-                Metrics.thresholded_prob_pmi,
-                Metrics.thresholded_prob,
+            metric=[
+                Metrics.loglikelihood_acc,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_token,
+                Metrics.loglikelihood_acc_norm_pmi,
                 Metrics.brier_score_norm,
                 Metrics.brier_score_token,
                 Metrics.brier_score_pmi,
                 Metrics.brier_score,
-                Metrics.one_minus_distance_to_dominant_prob_norm,
-                Metrics.one_minus_distance_to_dominant_prob_norm_token,
-                Metrics.one_minus_distance_to_dominant_prob_norm_pmi,
-                Metrics.one_minus_distance_to_dominant_prob, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token
+                Metrics.loglikelihood_prob,
+                Metrics.loglikelihood_prob_norm,
+                Metrics.loglikelihood_prob_norm_token,
+                Metrics.loglikelihood_prob_norm_pmi, 
             ]
         )

@@ -22,10 +22,14 @@ class JampTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
                 Metrics.loglikelihood_acc_norm_pmi,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
+                Metrics.loglikelihood_prob_norm_pmi, 
             ),
         )
 
@@ -47,10 +51,14 @@ class JNLI(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
                 Metrics.loglikelihood_acc_norm_pmi,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
+                Metrics.loglikelihood_prob_norm_pmi, 
             ),
         )
 
@@ -70,10 +78,14 @@ class JCommonsenseQA(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
                 Metrics.loglikelihood_acc_norm_pmi,
+                Metrics.brier_score_norm,
+                Metrics.brier_score_token,
+                Metrics.brier_score_pmi,
+                Metrics.brier_score,
                 Metrics.loglikelihood_prob,
                 Metrics.loglikelihood_prob_norm,
                 Metrics.loglikelihood_prob_norm_token,
-                Metrics.loglikelihood_prob_norm_pmi, Metrics.prob_raw,  Metrics.prob_raw_norm, Metrics.prob_raw_norm_token,  Metrics.prob_raw_norm_pmi, 
+                Metrics.loglikelihood_prob_norm_pmi, 
             ),
         )
     
