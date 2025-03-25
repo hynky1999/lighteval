@@ -1302,8 +1302,19 @@ class NanotronLightevalModel(LightevalModel):
                         # Ensure the generated responses do not contain the stop sequences.
                         decoded_response = self.tokenizer.decode(generation, skip_special_tokens=False)
                         stop_terms = dataset[example_index][1].stop_sequence
+                        
+                        # Skip any stop terms at the start
+                        start_idx = 0
+                        while any(decoded_response[start_idx:].startswith(stop) for stop in stop_terms):
+                            min_len = max(len(stop) for stop in stop_terms if decoded_response[start_idx:].startswith(stop))
+                            start_idx += min_len
+                            
+                        decoded_response = decoded_response[start_idx:]
+                        
+                        # Then handle any stop terms in the remaining text
                         for stop_term in stop_terms:
                             decoded_response = decoded_response.split(stop_term)[0]
+                        
                         # partial caching
                         cur_response = GenerateReturn(
                             result=decoded_response,
